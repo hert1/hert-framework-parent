@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/hert-auth/hert-auth.iml" filepath="$PROJECT_DIR$/hert-auth/hert-auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-service/hert-base/hert-base.iml" filepath="$PROJECT_DIR$/hert-service/hert-base/hert-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-service-api/hert-base-api/hert-base-api.iml" filepath="$PROJECT_DIR$/hert-service-api/hert-base-api/hert-base-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-common/hert-common.iml" filepath="$PROJECT_DIR$/hert-common/hert-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-core/hert-core.iml" filepath="$PROJECT_DIR$/hert-core/hert-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-core/hert-core-boot/hert-core-boot.iml" filepath="$PROJECT_DIR$/hert-core/hert-core-boot/hert-core-boot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-core/hert-core-launch/hert-core-launch.iml" filepath="$PROJECT_DIR$/hert-core/hert-core-launch/hert-core-launch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-core/hert-core-log/hert-core-log.iml" filepath="$PROJECT_DIR$/hert-core/hert-core-log/hert-core-log.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-core/hert-core-mybatis/hert-core-mybatis.iml" filepath="$PROJECT_DIR$/hert-core/hert-core-mybatis/hert-core-mybatis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-core/hert-core-secure/hert-core-secure.iml" filepath="$PROJECT_DIR$/hert-core/hert-core-secure/hert-core-secure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-core/hert-core-swagger/hert-core-swagger.iml" filepath="$PROJECT_DIR$/hert-core/hert-core-swagger/hert-core-swagger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-core/hert-core-tool/hert-core-tool.iml" filepath="$PROJECT_DIR$/hert-core/hert-core-tool/hert-core-tool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-gateway/hert-gateway.iml" filepath="$PROJECT_DIR$/hert-gateway/hert-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-parent.iml" filepath="$PROJECT_DIR$/hert-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-service/hert-service.iml" filepath="$PROJECT_DIR$/hert-service/hert-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hert-service-api/hert-service-api.iml" filepath="$PROJECT_DIR$/hert-service-api/hert-service-api.iml" />
+    </modules>
+  </component>
+</project>

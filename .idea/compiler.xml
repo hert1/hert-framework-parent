@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="hert-base" />
+        <module name="hert-core-mybatis" />
+        <module name="hert-core-tool" />
+        <module name="hert-core-log" />
+        <module name="hert-core-swagger" />
+        <module name="hert-auth" />
+        <module name="hert-core-launch" />
+        <module name="hert-core-boot" />
+        <module name="hert-common" />
+        <module name="hert-base-api" />
+        <module name="hert-core-secure" />
+        <module name="hert-gateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="hert-auth" target="1.8" />
+      <module name="hert-base" target="1.8" />
+      <module name="hert-base-api" target="1.8" />
+      <module name="hert-common" target="1.8" />
+      <module name="hert-core" target="1.8" />
+      <module name="hert-core-boot" target="1.8" />
+      <module name="hert-core-launch" target="1.8" />
+      <module name="hert-core-log" target="1.8" />
+      <module name="hert-core-mybatis" target="1.8" />
+      <module name="hert-core-secure" target="1.8" />
+      <module name="hert-core-swagger" target="1.8" />
+      <module name="hert-core-tool" target="1.8" />
+      <module name="hert-gateway" target="1.8" />
+      <module name="hert-parent" target="1.8" />
+      <module name="hert-service" target="1.8" />
+      <module name="hert-service-api" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="hert-auth" options="-parameters" />
+      <module name="hert-base" options="-parameters" />
+      <module name="hert-base-api" options="-parameters" />
+      <module name="hert-common" options="-parameters" />
+      <module name="hert-core" options="" />
+      <module name="hert-core-boot" options="-parameters" />
+      <module name="hert-core-launch" options="-parameters" />
+      <module name="hert-core-log" options="-parameters" />
+      <module name="hert-core-mybatis" options="-parameters" />
+      <module name="hert-core-secure" options="-parameters" />
+      <module name="hert-core-swagger" options="-parameters" />
+      <module name="hert-core-tool" options="-parameters" />
+      <module name="hert-gateway" options="-parameters" />
+    </option>
+  </component>
+</project>

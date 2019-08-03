@@ -1,0 +1,11 @@
+#服务器端口
+server:
+  port: 8100
+
+#数据源配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${hert.datasource.test.url}
+    username: ${hert.datasource.test.username}
+    password: ${hert.datasource.test.password}
