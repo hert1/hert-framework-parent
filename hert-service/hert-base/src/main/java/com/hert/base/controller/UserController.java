@@ -36,7 +36,7 @@ import java.util.Map;
  * @author Chill
  */
 @RestController
-@RequestMapping
+@RequestMapping("user")
 @AllArgsConstructor
 public class UserController {
 

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hert.base.api.entity.Role;
 import com.hert.base.api.vo.RoleVO;
+import com.hert.core.tool.node.INode;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
@@ -38,7 +39,7 @@ public interface IRoleService extends IService<Role> {
 	 * @param userId
 	 * @return
 	 */
-	List<RoleVO> tree(Integer userId);
+	List<INode> tree(Integer userId);
 
 	/**
 	 * 权限配置

@@ -41,7 +41,7 @@ public interface RoleMapper extends BaseMapper<Role> {
 	 * @param userId
 	 * @return
 	 */
-	@Select("select r.* from hert_role r right join hert_user_role u on r.id = u.role_id where u.user_id = #{userId}")
+	@Select("select r.* from hert_role r right join hert_user_role u on r.id = u.role_id where u.user_id = #{userId} and is_deleted = 0")
 	List<Role> selectRoleByUserId(Integer userId);
 
 }

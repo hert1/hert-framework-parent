@@ -1,5 +1,6 @@
 package com.hert.base.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -20,8 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -43,20 +43,19 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 
 	@Override
 	public List<Role> selectRoleByUserId(Integer userId) {
-		return baseMapper.selectRoleByUserId(userId);
+		List<Role> roles = baseMapper.selectRoleByUserId(userId);
+		Set<Role> childrenRole = selectChildren(roles);
+		childrenRole.addAll(roles);
+		roles.clear();
+		roles.addAll(childrenRole);
+		return roles;
 	}
 
 	@Override
-	public List<RoleVO> tree(Integer userId) {
-	/*	String userRole = SecureUtil.getUserRole();
-		String excludeRole = null;
-		if (!CollectionUtil.contains(Func.toStrArray(userRole), RoleConstant.ADMIN)) {
-			excludeRole = RoleConstant.ADMIN;
-		}*/
+	public List<INode> tree(Integer userId) {
 		List<Role> ListRole = this.selectRoleByUserId(userId);
-	//	List<INode> collect = ListRole.stream().map(this::entityVO).collect(Collectors.toList());
-	//	return ForestNodeMerger.merge(collect);
-		return null;
+		List<INode> collect = ListRole.stream().map(this::entityVO).collect(Collectors.toList());
+		return ForestNodeMerger.merge(collect);
 	}
 
 	@Override
@@ -75,5 +74,26 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 		return roleMenuService.saveBatch(roleMenus);
 	}
 
+	private RoleVO entityVO(Role role) {
+		return Func.copy(role, RoleVO.class);
+	}
+
+	private Set<Role> selectChildren(List<Role> listRole) {
+		Set<Role> childrenRole = new HashSet<>();
+		if (CollectionUtil.isEmpty(listRole)) {
+			return childrenRole;
+		}
+		for (Role role : listRole) {
+			List<Role> children = baseMapper.selectList(new QueryWrapper<Role>().eq("parent_id", role.getId()));
+			if (CollectionUtil.isNotEmpty(children)) {
+				childrenRole.addAll(children);
+			}
+			Set<Role> nextChildren = selectChildren(children);
+			if (CollectionUtil.isNotEmpty(nextChildren)) {
+				childrenRole.addAll(nextChildren);
+			}
+		}
+		return childrenRole;
+	}
 
 }

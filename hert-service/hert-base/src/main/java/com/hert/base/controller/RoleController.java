@@ -76,8 +76,8 @@ public class RoleController extends HertController {
 	@GetMapping("/tree")
 	@ApiOperationSupport(order = 3)
 	@ApiOperation(value = "树形结构", notes = "树形结构")
-	public R<List<RoleVO>> tree(@ApiIgnore @RequestParam Integer userId, HertUser hertUser) {
-		List<RoleVO> tree = roleService.tree(Func.toInt(userId, hertUser.getUserId()));
+	public R<List<INode>> tree(@ApiIgnore @RequestParam(required = false) Integer userId, HertUser hertUser) {
+		List<INode> tree = roleService.tree(Func.toInt(userId, hertUser.getUserId()));
 		return R.data(tree);
 	}
 
@@ -87,7 +87,7 @@ public class RoleController extends HertController {
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "新增或修改", notes = "传入role")
-	public R submit(@Valid @RequestBody Role role, HertUser user) {
+	public R submit(@Valid Role role, HertUser user) {
 		/*if (Func.isEmpty(role.getId())) {
 			role.setTenantCode(user.getTenantCode());
 		}*/
