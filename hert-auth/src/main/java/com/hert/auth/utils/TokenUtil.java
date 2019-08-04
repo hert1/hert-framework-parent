@@ -44,13 +44,14 @@ public class TokenUtil {
 		param.put(TokenConstant.PERMISSIONS, Func.join(userInfo.getPermissions())); //添加权限
 		param.put(TokenConstant.ACCOUNT, user.getAccount());
 		param.put(TokenConstant.USER_NAME, user.getAccount());
-		param.put(TokenConstant.ROLE_NAME, Func.join(userInfo.getRoles())); //添加角色
+		param.put(TokenConstant.ROLE_NAME, Func.join(userInfo.getRoleName())); //添加角色
 
 		TokenInfo accessToken = SecureUtil.createJWT(param, "audience", "issuser", TokenConstant.ACCESS_TOKEN);
 		AuthInfo authInfo = new AuthInfo();
 		authInfo.setAccount(user.getAccount());
 		authInfo.setUserName(user.getRealName());
-		authInfo.setAuthority(Func.join(userInfo.getRoles()));
+		authInfo.setPermissions(Func.join(userInfo.getPermissions()));
+		authInfo.setRoles(Func.join(userInfo.getRoleName()));
 		authInfo.setAccessToken(accessToken.getToken());
 		authInfo.setExpiresIn(accessToken.getExpire());
 		authInfo.setRefreshToken(createRefreshToken(userInfo).getToken());
@@ -73,5 +74,15 @@ public class TokenUtil {
 		param.put(TokenConstant.USER_ID, Func.toStr(user.getId()));
 		return SecureUtil.createJWT(param, "audience", "issuser", TokenConstant.REFRESH_TOKEN);
 	}
+
+	/**
+	 * 创建Token
+	 *
+	 * @param userInfo 用户信息
+	 * @return refreshToken
+	 */
+	public static String createToken(UserInfo userInfo) {
+		return createAuthInfo(userInfo).getAccessToken();
+}
 
 }

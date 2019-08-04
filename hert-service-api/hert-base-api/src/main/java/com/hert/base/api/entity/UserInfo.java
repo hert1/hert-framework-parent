@@ -34,6 +34,6 @@ public class UserInfo implements Serializable {
 	 * 角色集合
 	 */
 	@ApiModelProperty(value = "角色集合")
-	private List<String> roles;
+	private List<String> roleName;
 
 }
