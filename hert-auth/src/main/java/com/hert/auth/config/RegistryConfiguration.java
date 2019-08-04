@@ -17,7 +17,7 @@ public class RegistryConfiguration implements WebMvcConfigurer {
 	@Bean
 	public SecureRegistry secureRegistry() {
 		SecureRegistry secureRegistry = new SecureRegistry();
-		secureRegistry.excludePathPatterns("/token/**");
+		secureRegistry.excludePathPatterns("/login/**");
 		return secureRegistry;
 	}
 

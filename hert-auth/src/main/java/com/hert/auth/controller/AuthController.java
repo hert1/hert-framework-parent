@@ -43,6 +43,12 @@ public class AuthController {
 		return R.data(TokenUtil.createAuthInfo(userInfo));
 	}
 
+	@PostMapping("logout")
+	@ApiOperation(value = "退出" )
+	public R<String> logout() {
+		return R.data("success");
+	}
+
 	@PostMapping("login")
 	@ApiOperation(value = "登陆", notes = "账号:account,密码:password")
 	public R<String> login(@ApiParam(value = "授权类型", required = true) @RequestParam(defaultValue = "password", required = false) String grantType,

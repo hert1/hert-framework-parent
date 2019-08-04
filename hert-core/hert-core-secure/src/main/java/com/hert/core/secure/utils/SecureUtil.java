@@ -226,6 +226,23 @@ public class SecureUtil {
 	}
 
 	/**
+	 * 获取Claims
+	 *
+	 * @param auth request
+	 * @return Claims
+	 */
+	public static Claims getClaims(String auth) {
+		if ((auth != null) && (auth.length() > AUTH_LENGTH)) {
+			String headStr = auth.substring(0, 6).toLowerCase();
+			if (headStr.compareTo(SecureUtil.BEARER) == 0) {
+				auth = auth.substring(7);
+				return SecureUtil.parseJWT(auth);
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * 获取请求头
 	 *
 	 * @return header
