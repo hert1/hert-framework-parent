@@ -21,15 +21,6 @@ import java.util.List;
 public class RoleVO extends Role implements INode {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 主键ID
-	 */
-	private Integer id;
-
-	/**
-	 * 父节点ID
-	 */
-	private Integer parentId;
 
 	/**
 	 * 子孙节点

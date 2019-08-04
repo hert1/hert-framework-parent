@@ -93,8 +93,9 @@ public class MenuController extends HertController {
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "前端菜单数据", notes = "前端菜单数据")
 	public R<List<MenuVO>> routes(HertUser user) {
-		List<MenuVO> list = menuService.routes(user.getRoleId());
-		return R.data(list);
+		/*List<MenuVO> list = menuService.routes(user.getRoleId());
+		return R.data(list);*/
+		return null;
 	}
 
 	/**
@@ -104,8 +105,9 @@ public class MenuController extends HertController {
 	@ApiOperationSupport(order = 6)
 	@ApiOperation(value = "前端按钮数据", notes = "前端按钮数据")
 	public R<List<MenuVO>> buttons(HertUser user) {
-		List<MenuVO> list = menuService.buttons(user.getRoleId());
-		return R.data(list);
+		/*List<MenuVO> list = menuService.buttons(user.getRoleId());
+		return R.data(list);*/
+		return null;
 	}
 
 	/**

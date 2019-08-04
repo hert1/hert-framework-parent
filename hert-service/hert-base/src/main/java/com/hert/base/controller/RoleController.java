@@ -49,9 +49,9 @@ public class RoleController extends HertController {
 	 */
 	@GetMapping("/detail")
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入role")
-	public R<RoleVO> detail(Role role) {
-		Role detail = roleService.getOne(Condition.getQueryWrapper(role));
+	@ApiOperation(value = "详情", notes = "传入roleId")
+	public R<RoleVO> detail(@ApiIgnore @RequestParam Integer roleId) {
+		Role detail = roleService.getById(roleId);
 		return R.data(RoleWrapper.build().entityVO(detail));
 	}
 
@@ -60,15 +60,13 @@ public class RoleController extends HertController {
 	 */
 	@GetMapping("/list")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "roleName", value = "参数名称", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "roleAlias", value = "角色别名", paramType = "query", dataType = "string")
+		@ApiImplicitParam(name = "userId", value = "参数名称", paramType = "query", dataType = "Integer"),
 	})
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "列表", notes = "传入role")
-	public R<List<INode>> list(@ApiIgnore @RequestParam Map<String, Object> role, HertUser hertUser) {
-		QueryWrapper<Role> queryWrapper = Condition.getQueryWrapper(role, Role.class);
-		List<Role> list = roleService.list((!hertUser.getTenantCode().equals(HertConstant.ADMIN_TENANT_CODE)) ?
-				queryWrapper.lambda().eq(Role::getTenantCode, hertUser.getTenantCode()) : queryWrapper);
+	public R<List<INode>> list(@ApiIgnore @RequestParam Integer userId, HertUser hertUser) {
+		userId = null == userId ? hertUser.getUserId() : userId;
+		List<Role> list = roleService.selectRoleByUserId(userId);
 		return R.data(RoleWrapper.build().listNodeVO(list));
 	}
 
@@ -78,8 +76,8 @@ public class RoleController extends HertController {
 	@GetMapping("/tree")
 	@ApiOperationSupport(order = 3)
 	@ApiOperation(value = "树形结构", notes = "树形结构")
-	public R<List<RoleVO>> tree(String tenantCode, HertUser hertUser) {
-		List<RoleVO> tree = roleService.tree(Func.toStr(tenantCode, hertUser.getTenantCode()));
+	public R<List<RoleVO>> tree(@ApiIgnore @RequestParam Integer userId, HertUser hertUser) {
+		List<RoleVO> tree = roleService.tree(Func.toInt(userId, hertUser.getUserId()));
 		return R.data(tree);
 	}
 
@@ -90,9 +88,9 @@ public class RoleController extends HertController {
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "新增或修改", notes = "传入role")
 	public R submit(@Valid @RequestBody Role role, HertUser user) {
-		if (Func.isEmpty(role.getId())) {
+		/*if (Func.isEmpty(role.getId())) {
 			role.setTenantCode(user.getTenantCode());
-		}
+		}*/
 		return R.status(roleService.saveOrUpdate(role));
 	}
 

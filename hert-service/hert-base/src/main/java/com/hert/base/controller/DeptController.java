@@ -60,14 +60,12 @@ public class DeptController extends HertController {
 	 */
 	@GetMapping("/list")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "deptName", value = "部门名称", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "fullName", value = "部门全称", paramType = "query", dataType = "string")
+		@ApiImplicitParam(name = "userId", value = "部门名称", paramType = "query", dataType = "string"),
 	})
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "列表", notes = "传入dept")
-	public R<List<INode>> list(@ApiIgnore @RequestParam Map<String, Object> dept, HertUser hertUser) {
-		QueryWrapper<Dept> queryWrapper = Condition.getQueryWrapper(dept, Dept.class);
-		List<Dept> list = deptService.list((!hertUser.getTenantCode().equals(HertConstant.ADMIN_TENANT_CODE)) ? queryWrapper.lambda().eq(Dept::getTenantCode, hertUser.getTenantCode()) : queryWrapper);
+	public R<List<INode>> list(@ApiIgnore @RequestParam Integer userId, HertUser hertUser) {
+		List<Dept> list = deptService.selectDeptByUserId(Func.toInt(userId, hertUser.getUserId()));
 		return R.data(DeptWrapper.build().listNodeVO(list));
 	}
 
@@ -80,8 +78,9 @@ public class DeptController extends HertController {
 	@ApiOperationSupport(order = 3)
 	@ApiOperation(value = "树形结构", notes = "树形结构")
 	public R<List<DeptVO>> tree(String tenantCode, HertUser hertUser) {
-		List<DeptVO> tree = deptService.tree(Func.toStr(tenantCode, hertUser.getTenantCode()));
-		return R.data(tree);
+		/*List<DeptVO> tree = deptService.tree(Func.toStr(tenantCode, hertUser.getTenantCode()));
+		return R.data(tree);*/
+		return null;
 	}
 
 	/**
@@ -91,10 +90,11 @@ public class DeptController extends HertController {
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "新增或修改", notes = "传入dept")
 	public R submit(@Valid @RequestBody Dept dept, HertUser user) {
-		if (Func.isEmpty(dept.getId())) {
+		/*if (Func.isEmpty(dept.getId())) {
 			dept.setTenantCode(user.getTenantCode());
 		}
-		return R.status(deptService.saveOrUpdate(dept));
+		return R.status(deptService.saveOrUpdate(dept));*/
+		return null;
 	}
 
 	/**

@@ -20,7 +20,7 @@ public class UserClient implements IUserClient {
 	private IUserService service;
 
 	@Override
-	public R<UserInfo> userInfo(Long userId) {
+	public R<UserInfo> userInfo(Integer userId) {
 		return R.data(service.userInfo(userId));
 	}
 

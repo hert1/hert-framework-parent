@@ -72,7 +72,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
 	@Override
 	public List<MenuVO> grantTree(HertUser user) {
-		return ForestNodeMerger.merge(user.getTenantCode().equals(HertConstant.ADMIN_TENANT_CODE) ? baseMapper.grantTree() : baseMapper.grantTreeByRole(Func.toIntList(user.getRoleId())));
+		//return ForestNodeMerger.merge(user.getTenantCode().equals(HertConstant.ADMIN_TENANT_CODE) ? baseMapper.grantTree() : baseMapper.grantTreeByRole(Func.toIntList(user.getRoleId())));
+	return null;
 	}
 
 	@Override
@@ -86,9 +87,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 		if (Func.isEmpty(user)) {
 			return null;
 		}
-		List<MenuDTO> routes = baseMapper.authRoutes(Func.toIntList(user.getRoleId()));
+	//	List<MenuDTO> routes = baseMapper.authRoutes(Func.toIntList(user.getRoleId()));
 		List<Kv> list = new ArrayList<>();
-		routes.forEach(route -> list.add(Kv.init().set(route.getPath(), Kv.init().set("authority", Func.toStrArray(route.getAlias())))));
+	//	routes.forEach(route -> list.add(Kv.init().set(route.getPath(), Kv.init().set("authority", Func.toStrArray(route.getAlias())))));
 		return list;
 	}
 

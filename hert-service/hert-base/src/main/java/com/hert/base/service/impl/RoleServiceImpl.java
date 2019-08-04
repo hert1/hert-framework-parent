@@ -9,6 +9,7 @@ import com.hert.base.service.IRoleService;
 import com.hert.core.secure.utils.SecureUtil;
 import com.hert.core.tool.constant.RoleConstant;
 import com.hert.core.tool.node.ForestNodeMerger;
+import com.hert.core.tool.node.INode;
 import com.hert.core.tool.utils.CollectionUtil;
 import com.hert.core.tool.utils.Func;
 import com.hert.base.api.entity.Role;
@@ -21,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 服务实现类
@@ -45,13 +47,16 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 	}
 
 	@Override
-	public List<RoleVO> tree(String tenantCode) {
-		String userRole = SecureUtil.getUserRole();
+	public List<RoleVO> tree(Integer userId) {
+	/*	String userRole = SecureUtil.getUserRole();
 		String excludeRole = null;
 		if (!CollectionUtil.contains(Func.toStrArray(userRole), RoleConstant.ADMIN)) {
 			excludeRole = RoleConstant.ADMIN;
-		}
-		return ForestNodeMerger.merge(baseMapper.tree(tenantCode, excludeRole));
+		}*/
+		List<Role> ListRole = this.selectRoleByUserId(userId);
+	//	List<INode> collect = ListRole.stream().map(this::entityVO).collect(Collectors.toList());
+	//	return ForestNodeMerger.merge(collect);
+		return null;
 	}
 
 	@Override
@@ -69,5 +74,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 		// 新增配置
 		return roleMenuService.saveBatch(roleMenus);
 	}
+
 
 }

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class IUserClientFallback implements IUserClient {
 
 	@Override
-	public R<UserInfo> userInfo(Long userId) {
+	public R<UserInfo> userInfo(Integer userId) {
 		return R.fail("未获取到账号信息");
 	}
 

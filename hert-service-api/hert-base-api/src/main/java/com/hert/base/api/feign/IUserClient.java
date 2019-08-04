@@ -28,7 +28,7 @@ public interface IUserClient {
 	 * @return
 	 */
 	@GetMapping(API_PREFIX + "/user-info-by-id")
-	R<UserInfo> userInfo(@RequestParam("userId") Long userId);
+	R<UserInfo> userInfo(@RequestParam("userId") Integer userId);
 
 	/**
 	 * 获取用户信息
