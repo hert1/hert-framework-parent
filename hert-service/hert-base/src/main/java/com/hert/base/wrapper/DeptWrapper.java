@@ -2,7 +2,7 @@ package com.hert.base.wrapper;
 
 import com.hert.base.service.IDeptService;
 import com.hert.base.api.entity.Dept;
-import com.hert.base.api.vo.DeptVO;
+import com.hert.base.vo.DeptVO;
 import com.hert.common.constant.CommonConstant;
 import com.hert.core.mp.support.BaseEntityWrapper;
 import com.hert.core.tool.node.ForestNodeMerger;

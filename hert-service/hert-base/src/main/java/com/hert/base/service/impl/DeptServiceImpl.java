@@ -21,7 +21,7 @@ import com.hert.base.mapper.DeptMapper;
 import com.hert.base.service.IDeptService;
 import com.hert.core.tool.node.ForestNodeMerger;
 import com.hert.base.api.entity.Dept;
-import com.hert.base.api.vo.DeptVO;
+import com.hert.base.vo.DeptVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,15 +1,13 @@
 package com.hert.base.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.hert.base.api.entity.Dept;
 import com.hert.base.service.IDeptService;
-import com.hert.base.api.vo.DeptVO;
+import com.hert.base.vo.DeptVO;
 import com.hert.base.wrapper.DeptWrapper;
 import com.hert.core.boot.ctrl.HertController;
 import com.hert.core.mp.support.Condition;
 import com.hert.core.secure.HertUser;
 import com.hert.core.tool.api.R;
-import com.hert.core.tool.constant.HertConstant;
 import com.hert.core.tool.node.INode;
 import com.hert.core.tool.utils.Func;
 import io.swagger.annotations.Api;
@@ -29,7 +27,6 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 控制器
@@ -50,8 +47,8 @@ public class DeptController extends HertController {
 	@GetMapping("/detail")
 	@ApiOperationSupport(order = 1)
 	@ApiOperation(value = "详情", notes = "传入dept")
-	public R<DeptVO> detail(Dept dept) {
-		Dept detail = deptService.getOne(Condition.getQueryWrapper(dept));
+	public R<DeptVO> detail(@ApiIgnore @RequestParam Integer deptId) {
+		Dept detail = deptService.getById(deptId);
 		return R.data(DeptWrapper.build().entityVO(detail));
 	}
 
@@ -64,7 +61,7 @@ public class DeptController extends HertController {
 	})
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "列表", notes = "传入dept")
-	public R<List<INode>> list(@ApiIgnore @RequestParam Integer userId, HertUser hertUser) {
+	public R<List<INode>> list(@ApiIgnore @RequestParam(required = false) Integer userId, HertUser hertUser) {
 		List<Dept> list = deptService.selectDeptByUserId(Func.toInt(userId, hertUser.getUserId()));
 		return R.data(DeptWrapper.build().listNodeVO(list));
 	}
@@ -77,10 +74,9 @@ public class DeptController extends HertController {
 	@GetMapping("/tree")
 	@ApiOperationSupport(order = 3)
 	@ApiOperation(value = "树形结构", notes = "树形结构")
-	public R<List<DeptVO>> tree(String tenantCode, HertUser hertUser) {
-		/*List<DeptVO> tree = deptService.tree(Func.toStr(tenantCode, hertUser.getTenantCode()));
-		return R.data(tree);*/
-		return null;
+	public R<List<INode>> tree(@ApiIgnore @RequestParam(required = false) Integer userId, HertUser hertUser) {
+		List<Dept> list = deptService.selectDeptByUserId(Func.toInt(userId, hertUser.getUserId()));
+		return R.data(DeptWrapper.build().listNodeVO(list));
 	}
 
 	/**
@@ -89,12 +85,8 @@ public class DeptController extends HertController {
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "新增或修改", notes = "传入dept")
-	public R submit(@Valid @RequestBody Dept dept, HertUser user) {
-		/*if (Func.isEmpty(dept.getId())) {
-			dept.setTenantCode(user.getTenantCode());
-		}
-		return R.status(deptService.saveOrUpdate(dept));*/
-		return null;
+	public R submit(@Valid Dept dept, HertUser user) {
+		return R.status(deptService.saveOrUpdate(dept));
 	}
 
 	/**

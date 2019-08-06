@@ -1,7 +1,7 @@
 package com.hert.auth.granter;
 
 import com.hert.auth.enums.HertUserEnum;
-import com.hert.base.api.entity.UserInfo;
+import com.hert.base.api.dto.UserDTO;
 import com.hert.base.api.feign.IUserClient;
 import com.hert.core.tool.api.R;
 import com.hert.core.tool.utils.DigestUtil;
@@ -23,26 +23,26 @@ public class PasswordTokenGranter implements ITokenGranter {
 	private IUserClient userClient;
 
 	@Override
-	public UserInfo grant(TokenParameter tokenParameter) {
+	public UserDTO grant(TokenParameter tokenParameter) {
 		String tenantCode = tokenParameter.getArgs().getStr("tenantCode");
 		String account = tokenParameter.getArgs().getStr("account");
 		String password = tokenParameter.getArgs().getStr("password");
-		UserInfo userInfo = null;
+		UserDTO userDto = null;
 		if (Func.isNoneBlank(account, password)) {
 			// 获取用户类型
 			String userType = tokenParameter.getArgs().getStr("userType");
-			R<UserInfo> result;
+			R<UserDTO> result;
 			// 根据不同用户类型调用对应的接口返回数据，用户可自行拓展
 			if (userType.equals(HertUserEnum.WEB.getName())) {
-				result = userClient.userInfo(tenantCode, account, DigestUtil.encrypt(password));
+				result = userClient.userInfo(account, DigestUtil.encrypt(password));
 			} else if (userType.equals(HertUserEnum.APP.getName())) {
-				result = userClient.userInfo(tenantCode, account, DigestUtil.encrypt(password));
+				result = userClient.userInfo(account, DigestUtil.encrypt(password));
 			} else {
-				result = userClient.userInfo(tenantCode, account, DigestUtil.encrypt(password));
+				result = userClient.userInfo(account, DigestUtil.encrypt(password));
 			}
-			userInfo = result.isSuccess() ? result.getData() : null;
+			userDto = result.isSuccess() ? result.getData() : null;
 		}
-		return userInfo;
+		return userDto;
 	}
 
 }

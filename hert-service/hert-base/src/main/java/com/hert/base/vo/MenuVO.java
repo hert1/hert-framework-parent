@@ -1,4 +1,4 @@
-package com.hert.base.api.vo;
+package com.hert.base.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hert.base.api.entity.Menu;

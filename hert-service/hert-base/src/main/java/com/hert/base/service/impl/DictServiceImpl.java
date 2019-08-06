@@ -12,7 +12,7 @@ import com.hert.core.tool.node.ForestNodeMerger;
 import com.hert.core.tool.utils.Func;
 import com.hert.core.tool.utils.StringPool;
 import com.hert.base.api.entity.Dict;
-import com.hert.base.api.vo.DictVO;
+import com.hert.base.vo.DictVO;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

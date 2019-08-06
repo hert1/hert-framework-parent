@@ -1,7 +1,7 @@
-package com.hert.base.api.vo;
+package com.hert.base.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.hert.base.api.entity.Role;
+import com.hert.base.api.entity.Dept;
 import com.hert.core.tool.node.INode;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -17,10 +17,19 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "RoleVO对象", description = "RoleVO对象")
-public class RoleVO extends Role implements INode {
+@ApiModel(value = "DeptVO对象", description = "DeptVO对象")
+public class DeptVO extends Dept implements INode {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 主键ID
+	 */
+	private Integer id;
+
+	/**
+	 * 父节点ID
+	 */
+	private Integer parentId;
 
 	/**
 	 * 子孙节点
@@ -37,7 +46,8 @@ public class RoleVO extends Role implements INode {
 	}
 
 	/**
-	 * 上级角色
+	 * 上级部门
 	 */
 	private String parentName;
+
 }

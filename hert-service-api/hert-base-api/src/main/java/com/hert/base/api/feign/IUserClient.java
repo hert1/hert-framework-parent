@@ -1,7 +1,7 @@
 package com.hert.base.api.feign;
 
 
-import com.hert.base.api.entity.UserInfo;
+import com.hert.base.api.dto.UserDTO;
 import com.hert.core.launch.constant.AppConstant;
 import com.hert.core.tool.api.R;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -28,17 +28,16 @@ public interface IUserClient {
 	 * @return
 	 */
 	@GetMapping(API_PREFIX + "/user-info-by-id")
-	R<UserInfo> userInfo(@RequestParam("userId") Integer userId);
+	R<UserDTO> userInfo(@RequestParam("userId") Integer userId);
 
 	/**
 	 * 获取用户信息
 	 *
-	 * @param tenantCode 租户编号
 	 * @param account    账号
 	 * @param password   密码
 	 * @return
 	 */
 	@GetMapping(API_PREFIX + "/user-info")
-	R<UserInfo> userInfo(@RequestParam("tenantCode") String tenantCode, @RequestParam("account") String account, @RequestParam("password") String password);
+	R<UserDTO> userInfo(@RequestParam("account") String account, @RequestParam("password") String password);
 
 }

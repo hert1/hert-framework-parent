@@ -9,7 +9,7 @@ import com.hert.core.tool.api.R;
 import com.hert.core.tool.node.INode;
 import com.hert.core.tool.utils.Func;
 import com.hert.base.api.entity.Dict;
-import com.hert.base.api.vo.DictVO;
+import com.hert.base.vo.DictVO;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;

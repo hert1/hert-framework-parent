@@ -1,7 +1,7 @@
 package com.hert.auth.granter;
 
 
-import com.hert.base.api.entity.UserInfo;
+import com.hert.base.api.dto.UserDTO;
 
 /**
  * 授权认证统一接口.
@@ -16,6 +16,6 @@ public interface ITokenGranter {
 	 * @param tokenParameter 授权参数
 	 * @return UserInfo
 	 */
-	UserInfo grant(TokenParameter tokenParameter);
+	UserDTO grant(TokenParameter tokenParameter);
 
 }

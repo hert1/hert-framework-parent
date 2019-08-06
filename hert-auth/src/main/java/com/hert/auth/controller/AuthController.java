@@ -4,13 +4,10 @@ import com.hert.auth.granter.ITokenGranter;
 import com.hert.auth.granter.TokenGranterBuilder;
 import com.hert.auth.granter.TokenParameter;
 import com.hert.auth.utils.TokenUtil;
-import com.hert.base.api.entity.UserInfo;
+import com.hert.base.api.dto.UserDTO;
 import com.hert.core.secure.AuthInfo;
-import com.hert.core.secure.HertUser;
-import com.hert.core.secure.TokenInfo;
 import com.hert.core.secure.utils.SecureUtil;
 import com.hert.core.tool.api.R;
-import com.hert.core.tool.utils.DigestUtil;
 import com.hert.core.tool.utils.Func;
 import com.hert.core.tool.utils.WebUtil;
 import io.swagger.annotations.Api;
@@ -20,8 +17,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 认证模块
@@ -39,8 +34,8 @@ public class AuthController {
 		TokenParameter tokenParameter = new TokenParameter();
 		tokenParameter.getArgs().set("grantType", grantType).set("refreshToken", SecureUtil.getHeader());
 		ITokenGranter granter = TokenGranterBuilder.getGranter(grantType);
-		UserInfo userInfo = granter.grant(tokenParameter);
-		return R.data(TokenUtil.createAuthInfo(userInfo));
+		UserDTO userDto = granter.grant(tokenParameter);
+		return R.data(TokenUtil.createAuthInfo(userDto));
 	}
 
 	@PostMapping("logout")
@@ -63,13 +58,13 @@ public class AuthController {
 		tokenParameter.getArgs().set("tenantCode", tenantCode).set("account", account).set("password", password).set("grantType", grantType).set("refreshToken", refreshToken).set("userType", userType);
 
 		ITokenGranter granter = TokenGranterBuilder.getGranter(grantType);
-		UserInfo userInfo = granter.grant(tokenParameter);
+		UserDTO userDto = granter.grant(tokenParameter);
 
-		if (userInfo == null || userInfo.getUser() == null || userInfo.getUser().getId() == null) {
+		if (userDto == null || userDto.getUser() == null || userDto.getUser().getId() == null) {
 			return R.fail(TokenUtil.USER_NOT_FOUND);
 		}
 
-		return R.data(TokenUtil.createToken(userInfo));
+		return R.data(TokenUtil.createToken(userDto));
 	}
 
 }

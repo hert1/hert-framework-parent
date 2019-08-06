@@ -3,7 +3,6 @@ package com.hert.base.wrapper;
 
 import com.hert.base.service.IDeptService;
 import com.hert.base.service.IRoleService;
-import com.hert.base.service.IUserService;
 import com.hert.core.mp.support.BaseEntityWrapper;
 import com.hert.core.tool.api.R;
 import com.hert.core.tool.utils.BeanUtil;
@@ -11,7 +10,7 @@ import com.hert.core.tool.utils.Func;
 import com.hert.core.tool.utils.SpringUtil;
 import com.hert.base.api.entity.User;
 import com.hert.base.api.feign.IDictClient;
-import com.hert.base.api.vo.UserVO;
+import com.hert.base.vo.UserVO;
 
 import java.util.List;
 import java.util.stream.Collectors;

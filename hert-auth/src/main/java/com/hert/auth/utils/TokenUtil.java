@@ -2,7 +2,7 @@ package com.hert.auth.utils;
 
 
 import com.hert.base.api.entity.User;
-import com.hert.base.api.entity.UserInfo;
+import com.hert.base.api.dto.UserDTO;
 import com.hert.core.secure.AuthInfo;
 import com.hert.core.secure.TokenInfo;
 import com.hert.core.secure.utils.SecureUtil;
@@ -31,30 +31,30 @@ public class TokenUtil {
 	/**
 	 * 创建认证token
 	 *
-	 * @param userInfo 用户信息
+	 * @param userDto 用户信息
 	 * @return token
 	 */
-	public static AuthInfo createAuthInfo(UserInfo userInfo) {
-		User user = userInfo.getUser();
+	public static AuthInfo createAuthInfo(UserDTO userDto) {
+		User user = userDto.getUser();
 
 		//设置jwt参数
 		Map<String, String> param = new HashMap<>(16);
 		param.put(TokenConstant.TOKEN_TYPE, TokenConstant.ACCESS_TOKEN);
 		param.put(TokenConstant.USER_ID, Func.toStr(user.getId()));
-		param.put(TokenConstant.PERMISSIONS, Func.join(userInfo.getPermissions())); //添加权限
+		param.put(TokenConstant.PERMISSIONS, Func.join(userDto.getPermissions())); //添加权限
 		param.put(TokenConstant.ACCOUNT, user.getAccount());
 		param.put(TokenConstant.USER_NAME, user.getAccount());
-		param.put(TokenConstant.ROLE_NAME, Func.join(userInfo.getRoleName())); //添加角色
+		param.put(TokenConstant.ROLE_NAME, Func.join(userDto.getRoleName())); //添加角色
 
 		TokenInfo accessToken = SecureUtil.createJWT(param, "audience", "issuser", TokenConstant.ACCESS_TOKEN);
 		AuthInfo authInfo = new AuthInfo();
 		authInfo.setAccount(user.getAccount());
 		authInfo.setUserName(user.getRealName());
-		authInfo.setPermissions(Func.join(userInfo.getPermissions()));
-		authInfo.setRoles(Func.join(userInfo.getRoleName()));
+		authInfo.setPermissions(Func.join(userDto.getPermissions()));
+		authInfo.setRoles(Func.join(userDto.getRoleName()));
 		authInfo.setAccessToken(accessToken.getToken());
 		authInfo.setExpiresIn(accessToken.getExpire());
-		authInfo.setRefreshToken(createRefreshToken(userInfo).getToken());
+		authInfo.setRefreshToken(createRefreshToken(userDto).getToken());
 		authInfo.setTokenType(TokenConstant.BEARER);
 		authInfo.setLicense(TokenConstant.LICENSE_NAME);
 
@@ -64,11 +64,11 @@ public class TokenUtil {
 	/**
 	 * 创建refreshToken
 	 *
-	 * @param userInfo 用户信息
+	 * @param userDto 用户信息
 	 * @return refreshToken
 	 */
-	private static TokenInfo createRefreshToken(UserInfo userInfo) {
-		User user = userInfo.getUser();
+	private static TokenInfo createRefreshToken(UserDTO userDto) {
+		User user = userDto.getUser();
 		Map<String, String> param = new HashMap<>(16);
 		param.put(TokenConstant.TOKEN_TYPE, TokenConstant.REFRESH_TOKEN);
 		param.put(TokenConstant.USER_ID, Func.toStr(user.getId()));
@@ -78,11 +78,11 @@ public class TokenUtil {
 	/**
 	 * 创建Token
 	 *
-	 * @param userInfo 用户信息
+	 * @param userDto 用户信息
 	 * @return refreshToken
 	 */
-	public static String createToken(UserInfo userInfo) {
-		return createAuthInfo(userInfo).getAccessToken();
+	public static String createToken(UserDTO userDto) {
+		return createAuthInfo(userDto).getAccessToken();
 }
 
 }

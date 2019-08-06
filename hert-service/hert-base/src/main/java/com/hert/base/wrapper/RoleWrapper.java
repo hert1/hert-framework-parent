@@ -10,7 +10,7 @@ import com.hert.core.tool.utils.BeanUtil;
 import com.hert.core.tool.utils.Func;
 import com.hert.core.tool.utils.SpringUtil;
 import com.hert.base.api.entity.Role;
-import com.hert.base.api.vo.RoleVO;
+import com.hert.base.vo.RoleVO;
 
 import java.util.List;
 import java.util.stream.Collectors;

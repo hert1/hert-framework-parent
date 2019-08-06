@@ -1,5 +1,6 @@
-package com.hert.base.api.entity;
+package com.hert.base.api.dto;
 
+import com.hert.base.api.entity.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -8,13 +9,14 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * 数据传输对象实体类
  * 用户信息
  *
  * @author Chill
  */
 @Data
 @ApiModel(description = "用户信息")
-public class UserInfo implements Serializable {
+public class UserDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

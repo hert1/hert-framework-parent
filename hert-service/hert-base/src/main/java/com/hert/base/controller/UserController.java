@@ -8,10 +8,9 @@ import com.hert.core.mp.support.Condition;
 import com.hert.core.mp.support.Query;
 import com.hert.core.secure.HertUser;
 import com.hert.core.tool.api.R;
-import com.hert.core.tool.constant.HertConstant;
 import com.hert.core.tool.utils.Func;
 import com.hert.base.api.entity.User;
-import com.hert.base.api.vo.UserVO;
+import com.hert.base.vo.UserVO;
 import com.hert.base.wrapper.UserWrapper;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 /**
  * 控制器

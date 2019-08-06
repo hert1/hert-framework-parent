@@ -1,12 +1,13 @@
 package com.hert.base.service.impl;
 
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.hert.base.api.entity.*;
+import com.hert.base.api.entity.UserRole;
+import com.hert.base.api.dto.UserDTO;
 import com.hert.base.mapper.*;
 import com.hert.base.service.IUserService;
 import com.hert.common.constant.CommonConstant;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,13 +60,13 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 	}
 
 	@Override
-	public UserInfo userInfo(Integer userId) {
+	public UserDTO userInfo(Integer userId) {
 		User user = baseMapper.selectById(userId);
 		return setRoleAndPermissionInUser(user);
 	}
 
 	@Override
-	public UserInfo userInfo(String tenantCode, String account, String password) {
+	public UserDTO userInfo(String account, String password) {
 		User user = baseMapper.selectOne(new QueryWrapper<User>().eq("account", account).eq("password", password));
 		return setRoleAndPermissionInUser(user);
 	}
@@ -101,9 +101,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 		return baseMapper.getDeptName(Func.toStrArray(deptIds));
 	}
 
-	private UserInfo setRoleAndPermissionInUser (User user) {
-		UserInfo userInfo = new UserInfo();
-		userInfo.setUser(user);
+	private UserDTO setRoleAndPermissionInUser (User user) {
+		UserDTO userDto = new UserDTO();
+		userDto.setUser(user);
 		if (Func.isNotEmpty(user)) {
 			List<UserRole> listUserRole = userRoleMapper.selectList(new QueryWrapper<UserRole>().eq("user_id", user.getId()));
 			List<Integer> listRoleId = listUserRole.stream().map(item -> {
@@ -112,7 +112,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 			List<Role> listRole = roleMapper.selectList(new QueryWrapper<Role>().in(Func.isNotEmpty(listRoleId),"id", listRoleId.toArray()));
 			// 添加角色
 			if (Func.isNotEmpty(listRole)) {
-				userInfo.setRoleName(listRole.stream().map(item -> {
+				userDto.setRoleName(listRole.stream().map(item -> {
 					return item.getRoleAlias();
 				}).collect(Collectors.toList()));
 			}
@@ -126,13 +126,13 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 			}
 			//添加权限
 			if (Func.isNotEmpty(listMenu)) {
-				userInfo.setPermissions(listMenu.stream().map(item -> {
+				userDto.setPermissions(listMenu.stream().map(item -> {
 					return item.getCode();
 				}).collect(Collectors.toList()));
 			}
 			//TODO 添加部门
 		}
-		return userInfo;
+		return userDto;
 	}
 
 }

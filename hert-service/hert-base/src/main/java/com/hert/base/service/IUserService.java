@@ -19,7 +19,7 @@ package com.hert.base.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hert.core.mp.base.BaseService;
 import com.hert.base.api.entity.User;
-import com.hert.base.api.entity.UserInfo;
+import com.hert.base.api.dto.UserDTO;
 
 import java.util.List;
 
@@ -53,17 +53,16 @@ public interface IUserService extends BaseService<User> {
 	 * @param userId
 	 * @return
 	 */
-	UserInfo userInfo(Integer userId);
+	UserDTO userInfo(Integer userId);
 
 	/**
 	 * 用户信息
 	 *
-	 * @param tenantCode
 	 * @param account
 	 * @param password
 	 * @return
 	 */
-	UserInfo userInfo(String tenantCode, String account, String password);
+	UserDTO userInfo(String account, String password);
 
 	/**
 	 * 给用户设置角色

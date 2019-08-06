@@ -1,4 +1,4 @@
-package com.hert.base.api.vo;
+package com.hert.base.vo;
 
 import com.hert.base.api.entity.User;
 import io.swagger.annotations.ApiModel;

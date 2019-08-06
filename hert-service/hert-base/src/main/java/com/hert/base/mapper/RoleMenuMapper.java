@@ -18,7 +18,7 @@ package com.hert.base.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hert.base.api.entity.RoleMenu;
-import com.hert.base.api.vo.RoleMenuVO;
+import com.hert.base.vo.RoleMenuVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

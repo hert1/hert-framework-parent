@@ -1,6 +1,6 @@
 package com.hert.auth.granter;
 
-import com.hert.base.api.entity.UserInfo;
+import com.hert.base.api.dto.UserDTO;
 import com.hert.base.api.feign.IUserClient;
 import com.hert.core.secure.utils.SecureUtil;
 import com.hert.core.launch.constant.TokenConstant;
@@ -9,8 +9,6 @@ import com.hert.core.tool.utils.Func;
 import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 /**
  * RefreshTokenGranter
@@ -26,18 +24,18 @@ public class RefreshTokenGranter implements ITokenGranter {
 	private IUserClient userClient;
 
 	@Override
-	public UserInfo grant(TokenParameter tokenParameter) {
+	public UserDTO grant(TokenParameter tokenParameter) {
 		String grantType = tokenParameter.getArgs().getStr("grantType");
 		String refreshToken = tokenParameter.getArgs().getStr("refreshToken");
-		UserInfo userInfo = null;
+		UserDTO userDto = null;
 		if (Func.isNoneBlank(grantType, refreshToken) && grantType.equals(TokenConstant.REFRESH_TOKEN)) {
 			Claims claims = SecureUtil.getClaims(refreshToken);
 		//	String tokenType = Func.toStr(Objects.requireNonNull(claims).get(TokenConstant.TOKEN_TYPE));
 		//	if (tokenType.equals(TokenConstant.REFRESH_TOKEN)) {
-				R<UserInfo> result = userClient.userInfo(Func.toInt(claims.get(TokenConstant.USER_ID)));
-				userInfo = result.isSuccess() ? result.getData() : null;
+				R<UserDTO> result = userClient.userInfo(Func.toInt(claims.get(TokenConstant.USER_ID)));
+				userDto = result.isSuccess() ? result.getData() : null;
 		//	}
 		}
-		return userInfo;
+		return userDto;
 	}
 }
