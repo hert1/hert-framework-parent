@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @Builder
-public class HertUser implements Serializable {
+public class LoginUser implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	/**
@@ -39,11 +39,21 @@ public class HertUser implements Serializable {
 	@ApiModelProperty(hidden = true)
 	private String account;
 	/**
+	 * 角色id
+	 */
+	@ApiModelProperty(hidden = true)
+	private List<Integer> roleId;
+
+	/**
 	 * 角色名
 	 */
 	@ApiModelProperty(hidden = true)
 	private List<String> roleName;
-
+	/**
+	 * 权限id
+	 */
+	@ApiModelProperty(hidden = true)
+	private List<Integer> permissionId;
 	/**
 	 * 权限
 	 */

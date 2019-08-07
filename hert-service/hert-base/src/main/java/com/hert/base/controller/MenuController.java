@@ -3,8 +3,7 @@ package com.hert.base.controller;
 import com.hert.base.service.IMenuService;
 import com.hert.base.wrapper.MenuWrapper;
 import com.hert.core.boot.ctrl.HertController;
-import com.hert.core.mp.support.Condition;
-import com.hert.core.secure.HertUser;
+import com.hert.core.secure.LoginUser;
 import com.hert.core.secure.annotation.PreAuth;
 import com.hert.core.tool.api.R;
 import com.hert.core.tool.constant.RoleConstant;
@@ -19,7 +18,6 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 控制器
@@ -70,24 +68,12 @@ public class MenuController extends HertController {
 	}
 
 	/**
-	 * 前端菜单数据
-	 */
-	@GetMapping("/routes")
-	@ApiOperationSupport(order = 5)
-	@ApiOperation(value = "前端菜单数据", notes = "前端菜单数据")
-	public R<List<MenuVO>> routes(HertUser user) {
-		/*List<MenuVO> list = menuService.routes(user.getRoleId());
-		return R.data(list);*/
-		return null;
-	}
-
-	/**
 	 * 前端按钮数据
 	 */
 	@GetMapping("/buttons")
 	@ApiOperationSupport(order = 6)
 	@ApiOperation(value = "前端按钮数据", notes = "前端按钮数据")
-	public R<List<MenuVO>> buttons(HertUser user) {
+	public R<List<MenuVO>> buttons(LoginUser user) {
 		/*List<MenuVO> list = menuService.buttons(user.getRoleId());
 		return R.data(list);*/
 		return null;
@@ -99,29 +85,9 @@ public class MenuController extends HertController {
 	@GetMapping("/tree")
 	@ApiOperationSupport(order = 7)
 	@ApiOperation(value = "树形结构", notes = "树形结构")
-	public R<List<MenuVO>> tree() {
-		List<MenuVO> tree = menuService.tree();
+	public R<List<MenuVO>> tree(@ApiIgnore @RequestParam(required = false) List<Integer> roleIds, LoginUser user) {
+		List<MenuVO> tree = menuService.tree(Func.isNotEmpty(roleIds) ? roleIds : user.getRoleId());
 		return R.data(tree);
-	}
-
-	/**
-	 * 获取权限分配树形结构
-	 */
-	@GetMapping("/grant-tree")
-	@ApiOperationSupport(order = 8)
-	@ApiOperation(value = "权限分配树形结构", notes = "权限分配树形结构")
-	public R<List<MenuVO>> grantTree(HertUser user) {
-		return R.data(menuService.grantTree(user));
-	}
-
-	/**
-	 * 获取权限分配树形结构
-	 */
-	@GetMapping("/role-tree-keys")
-	@ApiOperationSupport(order = 9)
-	@ApiOperation(value = "角色所分配的树", notes = "角色所分配的树")
-	public R<List<String>> roleTreeKeys(String roleIds) {
-		return R.data(menuService.roleTreeKeys(roleIds));
 	}
 
 	/**
@@ -130,7 +96,7 @@ public class MenuController extends HertController {
 	@GetMapping("auth-routes")
 	@ApiOperationSupport(order = 10)
 	@ApiOperation(value = "菜单的角色权限")
-	public R<List<Kv>> authRoutes(HertUser user) {
+	public R<List<Kv>> authRoutes(LoginUser user) {
 		return R.data(menuService.authRoutes(user));
 	}
 

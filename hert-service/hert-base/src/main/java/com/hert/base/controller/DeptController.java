@@ -5,7 +5,7 @@ import com.hert.base.service.IDeptService;
 import com.hert.base.api.vo.DeptVO;
 import com.hert.base.wrapper.DeptWrapper;
 import com.hert.core.boot.ctrl.HertController;
-import com.hert.core.secure.HertUser;
+import com.hert.core.secure.LoginUser;
 import com.hert.core.tool.api.R;
 import com.hert.core.tool.node.INode;
 import com.hert.core.tool.utils.Func;
@@ -59,8 +59,8 @@ public class DeptController extends HertController {
 	})
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "列表", notes = "传入dept")
-	public R<List<INode>> list(@ApiIgnore @RequestParam(required = false) Integer userId, HertUser hertUser) {
-		List<Dept> list = deptService.selectDeptByUserId(Func.toInt(userId, hertUser.getUserId()));
+	public R<List<INode>> list(@ApiIgnore @RequestParam(required = false) Integer userId, LoginUser loginUser) {
+		List<Dept> list = deptService.selectDeptByUserId(Func.toInt(userId, loginUser.getUserId()));
 		return R.data(DeptWrapper.build().listNodeVO(list));
 	}
 
@@ -72,8 +72,8 @@ public class DeptController extends HertController {
 	@GetMapping("/tree")
 	@ApiOperationSupport(order = 3)
 	@ApiOperation(value = "树形结构", notes = "树形结构")
-	public R<List<INode>> tree(@ApiIgnore @RequestParam(required = false) Integer userId, HertUser hertUser) {
-		List<Dept> list = deptService.selectDeptByUserId(Func.toInt(userId, hertUser.getUserId()));
+	public R<List<INode>> tree(@ApiIgnore @RequestParam(required = false) Integer userId, LoginUser loginUser) {
+		List<Dept> list = deptService.selectDeptByUserId(Func.toInt(userId, loginUser.getUserId()));
 		return R.data(DeptWrapper.build().listNodeVO(list));
 	}
 
@@ -83,7 +83,7 @@ public class DeptController extends HertController {
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "新增或修改", notes = "传入dept")
-	public R submit(@Valid Dept dept, HertUser user) {
+	public R submit(@Valid Dept dept, LoginUser user) {
 		return R.status(deptService.saveOrUpdate(dept));
 	}
 

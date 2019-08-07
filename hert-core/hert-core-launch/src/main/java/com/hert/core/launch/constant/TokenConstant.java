@@ -26,6 +26,7 @@ public interface TokenConstant {
 	String CLIENT_ID = "client_id";
 	String LICENSE = "license";
 	String PERMISSIONS = "permissions";
+	String PERMISSIONS_ID = "permissions_id";
 	String LICENSE_NAME = "powered by hert";
 	String DEFAULT_AVATAR = "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png";
 	Integer AUTH_LENGTH = 7;

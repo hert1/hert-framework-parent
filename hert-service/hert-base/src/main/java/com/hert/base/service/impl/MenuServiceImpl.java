@@ -1,20 +1,25 @@
 package com.hert.base.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hert.base.api.vo.RoleVO;
 import com.hert.base.mapper.MenuMapper;
+import com.hert.base.mapper.RoleMenuMapper;
 import com.hert.base.service.IMenuService;
 import com.hert.base.service.IRoleMenuService;
 import com.hert.base.wrapper.MenuWrapper;
-import com.hert.core.secure.HertUser;
+import com.hert.core.secure.LoginUser;
 import com.hert.core.tool.node.ForestNodeMerger;
+import com.hert.core.tool.node.INode;
 import com.hert.core.tool.support.Kv;
 import com.hert.core.tool.utils.Func;
 import com.hert.base.api.entity.Menu;
 import com.hert.base.api.entity.RoleMenu;
 import com.hert.base.api.vo.MenuVO;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -29,32 +34,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
 
-	IRoleMenuService roleMenuService;
-
-	@Override
-	public IPage<MenuVO> selectMenuPage(IPage<MenuVO> page, MenuVO menu) {
-		return page.setRecords(baseMapper.selectMenuPage(page, menu));
-	}
-
-	@Override
-	public List<MenuVO> routes(String roleId) {
-		List<Menu> allMenus = baseMapper.allMenu();
-		List<Menu> roleMenus = baseMapper.roleMenu(Func.toIntList(roleId));
-		List<Menu> routes = new LinkedList<>(roleMenus);
-		roleMenus.forEach(roleMenu -> recursion(allMenus, routes, roleMenu));
-		routes.sort(Comparator.comparing(Menu::getSort));
-		MenuWrapper menuWrapper = new MenuWrapper();
-		List<Menu> collect = routes.stream().filter(x -> Func.equals(x.getCategory(), 1)).collect(Collectors.toList());
-		return menuWrapper.listNodeVO(collect);
-	}
-
-	public void recursion(List<Menu> allMenus, List<Menu> routes, Menu roleMenu) {
-		Optional<Menu> menu = allMenus.stream().filter(x -> Func.equals(x.getId(), roleMenu.getParentId())).findFirst();
-		if (menu.isPresent() && !routes.contains(menu.get())) {
-			routes.add(menu.get());
-			recursion(allMenus, routes, menu.get());
-		}
-	}
+	@Autowired
+	RoleMenuMapper roleMenuMapper;
 
 	@Override
 	public List<MenuVO> buttons(String roleId) {
@@ -64,24 +45,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 	}
 
 	@Override
-	public List<MenuVO> tree() {
-		return ForestNodeMerger.merge(baseMapper.tree());
+	public List<MenuVO> tree(List<Integer> roleId) {
+		List<RoleMenu> listRoleMenu = roleMenuMapper.selectList(new QueryWrapper<RoleMenu>().in("role_id", roleId));
+		List<Integer> listMenuId = listRoleMenu.stream().map(item -> {
+			return item.getMenuId();
+		}).collect(Collectors.toList());
+		List<Menu> listMenu = baseMapper.selectList(new QueryWrapper<Menu>().in("id", listMenuId));
+		List<MenuVO> collect = listMenu.stream().map(this::entityVO).collect(Collectors.toList());
+		return ForestNodeMerger.merge(collect);
 	}
 
 	@Override
-	public List<MenuVO> grantTree(HertUser user) {
-		//return ForestNodeMerger.merge(user.getTenantCode().equals(HertConstant.ADMIN_TENANT_CODE) ? baseMapper.grantTree() : baseMapper.grantTreeByRole(Func.toIntList(user.getRoleId())));
-	return null;
-	}
-
-	@Override
-	public List<String> roleTreeKeys(String roleIds) {
-		List<RoleMenu> roleMenus = roleMenuService.list(Wrappers.<RoleMenu>query().lambda().in(RoleMenu::getRoleId, Func.toIntList(roleIds)));
-		return roleMenus.stream().map(roleMenu -> Func.toStr(roleMenu.getMenuId())).collect(Collectors.toList());
-	}
-
-	@Override
-	public List<Kv> authRoutes(HertUser user) {
+	public List<Kv> authRoutes(LoginUser user) {
 		if (Func.isEmpty(user)) {
 			return null;
 		}
@@ -89,6 +64,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 		List<Kv> list = new ArrayList<>();
 	//	routes.forEach(route -> list.add(Kv.init().set(route.getPath(), Kv.init().set("authority", Func.toStrArray(route.getAlias())))));
 		return list;
+	}
+
+	private MenuVO entityVO(Menu menu) {
+		return Func.copy(menu, MenuVO.class);
 	}
 
 }

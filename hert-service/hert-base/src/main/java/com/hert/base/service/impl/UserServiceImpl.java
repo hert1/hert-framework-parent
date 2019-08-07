@@ -115,6 +115,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 				userDto.setRoleName(listRole.stream().map(item -> {
 					return item.getRoleAlias();
 				}).collect(Collectors.toList()));
+				userDto.setRoleId(listRole.stream().map(item -> {
+					return item.getId();
+				}).collect(Collectors.toList()));
 			}
 			List<RoleMenu> listRoleMenu = roleMenuMapper.selectList(new QueryWrapper<RoleMenu>().in("role_id", listRoleId));
 			List<Menu> listMenu = null;
@@ -129,8 +132,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 				userDto.setPermissions(listMenu.stream().map(item -> {
 					return item.getCode();
 				}).collect(Collectors.toList()));
+				userDto.setPermissionsId(listMenu.stream().map(item -> {
+					return item.getId();
+				}).collect(Collectors.toList()));
 			}
-			//TODO 添加部门
 		}
 		return userDto;
 	}

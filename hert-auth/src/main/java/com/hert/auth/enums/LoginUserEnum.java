@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum HertUserEnum {
+public enum LoginUserEnum {
 
 	/**
 	 * web

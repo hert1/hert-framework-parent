@@ -27,15 +27,27 @@ public class UserDTO implements Serializable {
 	private User user;
 
 	/**
-	 * 权限标识集合
+	 * 权限标识name集合
 	 */
 	@ApiModelProperty(value = "权限集合")
 	private List<String> permissions;
 
 	/**
-	 * 角色集合
+	 * 角色name集合
 	 */
 	@ApiModelProperty(value = "角色集合")
 	private List<String> roleName;
+
+	/**
+	 * 权限标识id集合
+	 */
+	@ApiModelProperty(value = "权限id集合")
+	private List<Integer> permissionsId;
+
+	/**
+	 * 角色id集合
+	 */
+	@ApiModelProperty(value = "角色id集合")
+	private List<Integer> roleId;
 
 }

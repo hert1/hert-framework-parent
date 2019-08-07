@@ -1,6 +1,6 @@
 package com.hert.core.boot.resolver;
 
-import com.hert.core.secure.HertUser;
+import com.hert.core.secure.LoginUser;
 import com.hert.core.secure.utils.SecureUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
@@ -10,7 +10,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 /**
- * Token转化HertUser
+ * Token转化LoginUser
  *
  * @author Chill
  */
@@ -25,7 +25,7 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
 	 */
 	@Override
 	public boolean supportsParameter(MethodParameter methodParameter) {
-		return methodParameter.getParameterType().equals(HertUser.class);
+		return methodParameter.getParameterType().equals(LoginUser.class);
 	}
 
 	/**

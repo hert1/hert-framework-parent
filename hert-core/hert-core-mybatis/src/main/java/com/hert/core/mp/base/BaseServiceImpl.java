@@ -2,7 +2,7 @@ package com.hert.core.mp.base;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hert.core.secure.HertUser;
+import com.hert.core.secure.LoginUser;
 import com.hert.core.secure.utils.SecureUtil;
 import com.hert.core.tool.constant.HertConstant;
 import org.springframework.validation.annotation.Validated;
@@ -33,7 +33,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 
 	@Override
 	public boolean save(T entity) {
-		HertUser user = SecureUtil.getUser();
+		LoginUser user = SecureUtil.getUser();
 		if (user != null) {
 			entity.setCreateUser(user.getUserId());
 			entity.setUpdateUser(user.getUserId());
@@ -50,7 +50,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 
 	@Override
 	public boolean updateById(T entity) {
-		HertUser user = SecureUtil.getUser();
+		LoginUser user = SecureUtil.getUser();
 		if (user != null) {
 			entity.setUpdateUser(user.getUserId());
 		}

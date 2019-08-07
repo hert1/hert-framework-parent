@@ -2,7 +2,7 @@ package com.hert.core.boot.ctrl;
 
 import com.hert.core.boot.file.HertFile;
 import com.hert.core.boot.file.HertFileUtil;
-import com.hert.core.secure.HertUser;
+import com.hert.core.secure.LoginUser;
 import com.hert.core.secure.utils.SecureUtil;
 import com.hert.core.tool.api.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +37,9 @@ public class HertController {
 	/**
 	 * 获取当前用户
 	 *
-	 * @return HertUser
+	 * @return LoginUser
 	 */
-	public HertUser getUser() {
+	public LoginUser getUser() {
 		return SecureUtil.getUser();
 	}
 

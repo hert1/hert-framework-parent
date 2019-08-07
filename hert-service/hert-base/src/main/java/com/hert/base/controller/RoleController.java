@@ -3,7 +3,7 @@ package com.hert.base.controller;
 import com.hert.base.service.IRoleService;
 import com.hert.base.wrapper.RoleWrapper;
 import com.hert.core.boot.ctrl.HertController;
-import com.hert.core.secure.HertUser;
+import com.hert.core.secure.LoginUser;
 import com.hert.core.tool.api.R;
 import com.hert.core.tool.node.INode;
 import com.hert.core.tool.utils.Func;
@@ -54,8 +54,8 @@ public class RoleController extends HertController {
 	@GetMapping("/tree")
 	@ApiOperationSupport(order = 3)
 	@ApiOperation(value = "树形结构", notes = "树形结构")
-	public R<List<INode>> tree(@ApiIgnore @RequestParam(required = false) Integer userId, HertUser hertUser) {
-		List<Role> list = roleService.selectRoleByUserId(Func.toInt(userId, hertUser.getUserId()));
+	public R<List<INode>> tree(@ApiIgnore @RequestParam(required = false) Integer userId, LoginUser loginUser) {
+		List<Role> list = roleService.selectRoleByUserId(Func.toInt(userId, loginUser.getUserId()));
 		return R.data(RoleWrapper.build().listNodeVO(list));
 	}
 
@@ -65,7 +65,7 @@ public class RoleController extends HertController {
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "新增或修改", notes = "传入role")
-	public R submit(@Valid Role role, HertUser user) {
+	public R submit(@Valid Role role, LoginUser user) {
 		return R.status(roleService.saveOrUpdate(role));
 	}
 

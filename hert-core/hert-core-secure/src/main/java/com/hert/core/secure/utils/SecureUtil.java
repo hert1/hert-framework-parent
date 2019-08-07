@@ -1,6 +1,6 @@
 package com.hert.core.secure.utils;
 
-import com.hert.core.secure.HertUser;
+import com.hert.core.secure.LoginUser;
 import com.hert.core.secure.TokenInfo;
 import com.hert.core.secure.constant.SecureConstant;
 import com.hert.core.secure.exception.SecureException;
@@ -30,7 +30,7 @@ import java.util.*;
  * @author Chill
  */
 public class SecureUtil {
-	private static final String Hert_USER_REQUEST_ATTR = "_Hert_USER_REQUEST_ATTR_";
+	private static final String LOGIN_USER_REQUEST_ATTR = "_Login_USER_REQUEST_ATTR_";
 
 	private final static String HEADER = TokenConstant.HEADER;
 	private final static String BEARER = TokenConstant.BEARER;
@@ -56,49 +56,43 @@ public class SecureUtil {
 	/**
 	 * 获取用户信息
 	 *
-	 * @return HertUser
+	 * @return LoginUser
 	 */
-	public static HertUser getUser() {
+	public static LoginUser getUser() {
 		HttpServletRequest request = WebUtil.getRequest();
 		if (request == null) {
 			return null;
 		}
 		// 优先从 request 中获取
-		Object hertUser = request.getAttribute(Hert_USER_REQUEST_ATTR);
-		if (hertUser == null) {
-			hertUser = getUser(request);
-			if (hertUser != null) {
+		Object loginUser = request.getAttribute(LOGIN_USER_REQUEST_ATTR);
+		if (loginUser == null) {
+			loginUser = getUser(request);
+			if (loginUser != null) {
 				// 设置到 request 中
-				request.setAttribute(Hert_USER_REQUEST_ATTR, hertUser);
+				request.setAttribute(LOGIN_USER_REQUEST_ATTR, loginUser);
 			}
 		}
-		return (HertUser) hertUser;
+		return (LoginUser) loginUser;
 	}
 
 	/**
 	 * 获取用户信息
 	 *
 	 * @param request request
-	 * @return HertUser
+	 * @return LoginUser
 	 */
-	public static HertUser getUser(HttpServletRequest request) {
+	public static LoginUser getUser(HttpServletRequest request) {
 		Claims claims = getClaims(request);
 		if (claims == null) {
 			return null;
 		}
-		String clientId = Func.toStr(claims.get(SecureUtil.CLIENT_ID));
-		Integer userId = Func.toInt(claims.get(SecureUtil.USER_ID));
-		String account = Func.toStr(claims.get(SecureUtil.ACCOUNT));
-		String roleName = Func.toStr(claims.get(SecureUtil.ROLE_NAME));
-		String permissions = Func.toStr(claims.get(SecureUtil.PERMISSIONS));
-		String userName = Func.toStr(claims.get(SecureUtil.USER_NAME));
-		return HertUser.builder()
-				.userId(userId)
-				.clientId(clientId)
-				.account(account)
-				.roleName(Func.toStrList(roleName))
-				.permission(Func.toStrList(permissions))
-				.userName(userName)
+		return LoginUser.builder()
+				.userId(Func.toInt(claims.get(SecureUtil.USER_ID)))
+				.clientId(Func.toStr(claims.get(SecureUtil.CLIENT_ID)))
+				.account(Func.toStr(claims.get(SecureUtil.ACCOUNT)))
+				.roleName(Func.toStrList(Func.toStr(claims.get(SecureUtil.ROLE_NAME))))
+				.permission(Func.toStrList(Func.toStr(claims.get(SecureUtil.PERMISSIONS))))
+				.userName(Func.toStr(claims.get(SecureUtil.USER_NAME)))
 				.build();
 	}
 
@@ -109,7 +103,7 @@ public class SecureUtil {
 	 * @return userId
 	 */
 	public static Integer getUserId() {
-		HertUser user = getUser();
+		LoginUser user = getUser();
 		return (null == user) ? -1 : user.getUserId();
 	}
 
@@ -120,7 +114,7 @@ public class SecureUtil {
 	 * @return userId
 	 */
 	public static Integer getUserId(HttpServletRequest request) {
-		HertUser user = getUser(request);
+		LoginUser user = getUser(request);
 		return (null == user) ? -1 : user.getUserId();
 	}
 
@@ -130,7 +124,7 @@ public class SecureUtil {
 	 * @return userAccount
 	 */
 	public static String getUserAccount() {
-		HertUser user = getUser();
+		LoginUser user = getUser();
 		return (null == user) ? StringPool.EMPTY : user.getAccount();
 	}
 
@@ -141,7 +135,7 @@ public class SecureUtil {
 	 * @return userAccount
 	 */
 	public static String getUserAccount(HttpServletRequest request) {
-		HertUser user = getUser(request);
+		LoginUser user = getUser(request);
 		return (null == user) ? StringPool.EMPTY : user.getAccount();
 	}
 
@@ -151,7 +145,7 @@ public class SecureUtil {
 	 * @return userName
 	 */
 	public static String getUserName() {
-		HertUser user = getUser();
+		LoginUser user = getUser();
 		return (null == user) ? StringPool.EMPTY : user.getUserName();
 	}
 
@@ -162,18 +156,38 @@ public class SecureUtil {
 	 * @return userName
 	 */
 	public static String getUserName(HttpServletRequest request) {
-		HertUser user = getUser(request);
+		LoginUser user = getUser(request);
 		return (null == user) ? StringPool.EMPTY : user.getUserName();
 	}
 
 	/**
-	 * 获取用户角色
+	 * 获取用户角色name
 	 *
 	 * @return userName
 	 */
 	public static List<String> getUserRole() {
-		HertUser user = getUser();
+		LoginUser user = getUser();
 		return (null == user) ? null : user.getRoleName();
+	}
+
+	/**
+	 * 获取用户角色id
+	 *
+	 * @return userName
+	 */
+	public static List<Integer> getUserRoleId() {
+		LoginUser user = getUser();
+		return (null == user) ? null : user.getRoleId();
+	}
+
+	/**
+	 * 获取权限id
+	 *
+	 * @return userName
+	 */
+	public static List<Integer> getPermissionId() {
+		LoginUser user = getUser();
+		return (null == user) ? null : user.getPermissionId();
 	}
 
 	/**
@@ -182,7 +196,7 @@ public class SecureUtil {
 	 * @return userName
 	 */
 	public static List<String> getPermission() {
-		HertUser user = getUser();
+		LoginUser user = getUser();
 		return (null == user) ? null : user.getPermission();
 	}
 
@@ -192,7 +206,7 @@ public class SecureUtil {
 	 * @return tenantCode
 	 */
 	public static String getClientId() {
-		HertUser user = getUser();
+		LoginUser user = getUser();
 		return (null == user) ? StringPool.EMPTY : user.getClientId();
 	}
 
@@ -203,7 +217,7 @@ public class SecureUtil {
 	 * @return tenantCode
 	 */
 	public static String getClientId(HttpServletRequest request) {
-		HertUser user = getUser(request);
+		LoginUser user = getUser(request);
 		return (null == user) ? StringPool.EMPTY : user.getClientId();
 	}
 

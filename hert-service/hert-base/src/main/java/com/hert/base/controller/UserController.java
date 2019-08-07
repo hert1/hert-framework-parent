@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hert.base.service.IUserService;
 import com.hert.core.mp.support.Condition;
 import com.hert.core.mp.support.Query;
-import com.hert.core.secure.HertUser;
+import com.hert.core.secure.LoginUser;
 import com.hert.core.tool.api.R;
 import com.hert.core.tool.utils.Func;
 import com.hert.base.api.entity.User;
@@ -63,9 +63,8 @@ public class UserController {
 	})
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "列表", notes = "账号id")
-	public R<IPage<UserVO>> list(@ApiIgnore @RequestParam(required = false) Integer id, Query query, HertUser hertUser) {
-		id = null == id ? hertUser.getUserId() : id;
-		IPage<User> pages = userService.page(Condition.getPage(query), new QueryWrapper<User>().eq("parent_id", id));
+	public R<IPage<UserVO>> list(@ApiIgnore @RequestParam(required = false) Integer id, Query query, LoginUser loginUser) {
+		IPage<User> pages = userService.page(Condition.getPage(query), new QueryWrapper<User>().eq("parent_id", Func.toInt(id, loginUser.getUserId())));
 		return R.data(UserWrapper.build().pageVO(pages));
 	}
 

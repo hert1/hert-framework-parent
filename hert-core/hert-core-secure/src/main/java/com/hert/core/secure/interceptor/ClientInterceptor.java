@@ -1,6 +1,6 @@
 package com.hert.core.secure.interceptor;
 
-import com.hert.core.secure.HertUser;
+import com.hert.core.secure.LoginUser;
 import com.hert.core.secure.utils.SecureUtil;
 import com.hert.core.tool.api.R;
 import com.hert.core.tool.api.ResultCode;
@@ -31,7 +31,7 @@ public class ClientInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		HertUser user = SecureUtil.getUser();
+		LoginUser user = SecureUtil.getUser();
 		if (user != null && StringUtil.equals(clientId, SecureUtil.getClientIdFromHeader()) && StringUtil.equals(clientId, user.getClientId())) {
 			return true;
 		} else {

@@ -42,8 +42,10 @@ public class TokenUtil {
 		param.put(TokenConstant.TOKEN_TYPE, TokenConstant.ACCESS_TOKEN);
 		param.put(TokenConstant.USER_ID, Func.toStr(user.getId()));
 		param.put(TokenConstant.PERMISSIONS, Func.join(userDto.getPermissions())); //添加权限
+		param.put(TokenConstant.PERMISSIONS_ID, Func.join(userDto.getPermissionsId())); //添加权限id
 		param.put(TokenConstant.ACCOUNT, user.getAccount());
 		param.put(TokenConstant.USER_NAME, user.getAccount());
+		param.put(TokenConstant.ROLE_ID, Func.join(userDto.getRoleId())); //添加角色id
 		param.put(TokenConstant.ROLE_NAME, Func.join(userDto.getRoleName())); //添加角色
 
 		TokenInfo accessToken = SecureUtil.createJWT(param, "audience", "issuser", TokenConstant.ACCESS_TOKEN);
