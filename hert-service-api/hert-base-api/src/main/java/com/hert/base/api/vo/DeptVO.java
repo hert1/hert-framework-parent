@@ -1,7 +1,7 @@
-package com.hert.base.vo;
+package com.hert.base.api.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.hert.base.api.entity.Dict;
+import com.hert.base.api.entity.Dept;
 import com.hert.core.tool.node.INode;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -14,13 +14,13 @@ import java.util.List;
  * 视图实体类
  *
  * @author Chill
- * @since 2018-12-24
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "DictVO对象", description = "DictVO对象")
-public class DictVO extends Dict implements INode {
+@ApiModel(value = "DeptVO对象", description = "DeptVO对象")
+public class DeptVO extends Dept implements INode {
 	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 主键ID
 	 */
@@ -46,7 +46,8 @@ public class DictVO extends Dict implements INode {
 	}
 
 	/**
-	 * 上级字典
+	 * 上级部门
 	 */
 	private String parentName;
+
 }

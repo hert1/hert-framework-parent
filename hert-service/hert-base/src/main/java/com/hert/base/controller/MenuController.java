@@ -11,7 +11,7 @@ import com.hert.core.tool.constant.RoleConstant;
 import com.hert.core.tool.support.Kv;
 import com.hert.core.tool.utils.Func;
 import com.hert.base.api.entity.Menu;
-import com.hert.base.vo.MenuVO;
+import com.hert.base.api.vo.MenuVO;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -41,26 +41,9 @@ public class MenuController extends HertController {
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 1)
 	@ApiOperation(value = "详情", notes = "传入menu")
-	public R<MenuVO> detail(Menu menu) {
-		Menu detail = menuService.getOne(Condition.getQueryWrapper(menu));
+	public R<MenuVO> detail(@ApiIgnore @RequestParam Integer menuId) {
+		Menu detail = menuService.getById(menuId);
 		return R.data(MenuWrapper.build().entityVO(detail));
-	}
-
-	/**
-	 * 列表
-	 */
-	@GetMapping("/list")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "code", value = "菜单编号", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "name", value = "菜单名称", paramType = "query", dataType = "string")
-	})
-	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
-	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "列表", notes = "传入menu")
-	public R<List<MenuVO>> list(@ApiIgnore @RequestParam Map<String, Object> menu) {
-		@SuppressWarnings("unchecked")
-		List<Menu> list = menuService.list(Condition.getQueryWrapper(menu, Menu.class).lambda().orderByAsc(Menu::getSort));
-		return R.data(MenuWrapper.build().listNodeVO(list));
 	}
 
 	/**

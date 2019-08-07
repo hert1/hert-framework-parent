@@ -13,7 +13,7 @@ import com.hert.core.tool.support.Kv;
 import com.hert.core.tool.utils.Func;
 import com.hert.base.api.entity.Menu;
 import com.hert.base.api.entity.RoleMenu;
-import com.hert.base.vo.MenuVO;
+import com.hert.base.api.vo.MenuVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -3,7 +3,7 @@ package com.hert.base.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hert.base.api.entity.Dept;
-import com.hert.base.vo.DeptVO;
+import com.hert.base.api.vo.DeptVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

@@ -13,7 +13,7 @@ import com.hert.core.tool.utils.CollectionUtil;
 import com.hert.core.tool.utils.Func;
 import com.hert.base.api.entity.Role;
 import com.hert.base.api.entity.RoleMenu;
-import com.hert.base.vo.RoleVO;
+import com.hert.base.api.vo.RoleVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;

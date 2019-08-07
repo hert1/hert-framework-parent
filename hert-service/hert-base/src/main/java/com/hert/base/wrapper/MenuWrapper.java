@@ -11,7 +11,7 @@ import com.hert.core.tool.utils.Func;
 import com.hert.core.tool.utils.SpringUtil;
 import com.hert.base.api.entity.Menu;
 import com.hert.base.api.feign.IDictClient;
-import com.hert.base.vo.MenuVO;
+import com.hert.base.api.vo.MenuVO;
 
 import java.util.List;
 import java.util.stream.Collectors;

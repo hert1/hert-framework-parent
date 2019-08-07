@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hert.core.secure.HertUser;
 import com.hert.core.tool.support.Kv;
 import com.hert.base.api.entity.Menu;
-import com.hert.base.vo.MenuVO;
+import com.hert.base.api.vo.MenuVO;
 
 import java.util.List;
 

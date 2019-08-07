@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hert.base.api.dto.MenuDTO;
 import com.hert.base.api.entity.Menu;
-import com.hert.base.vo.MenuVO;
+import com.hert.base.api.vo.MenuVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

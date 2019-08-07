@@ -3,7 +3,7 @@ package com.hert.base.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hert.base.api.entity.Role;
-import com.hert.base.vo.RoleVO;
+import com.hert.base.api.vo.RoleVO;
 import com.hert.core.tool.node.INode;
 
 import javax.validation.constraints.NotEmpty;

@@ -3,7 +3,7 @@ package com.hert.base.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hert.base.api.entity.Dept;
-import com.hert.base.vo.DeptVO;
+import com.hert.base.api.vo.DeptVO;
 
 import java.util.List;
 
