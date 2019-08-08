@@ -22,7 +22,7 @@ public interface IMenuService extends IService<Menu> {
 	 * @param roleId
 	 * @return
 	 */
-	List<MenuVO> buttons(String roleId);
+	List<MenuVO> buttons(List<Integer> roleId);
 
 	/**
 	 * 树形结构
@@ -31,12 +31,5 @@ public interface IMenuService extends IService<Menu> {
 	 */
 	List<MenuVO> tree(List<Integer> roleId);
 
-	/**
-	 * 获取配置的角色权限
-	 *
-	 * @param user
-	 * @return
-	 */
-	List<Kv> authRoutes(LoginUser user);
 
 }

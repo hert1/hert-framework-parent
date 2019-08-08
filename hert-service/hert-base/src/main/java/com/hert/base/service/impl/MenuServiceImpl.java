@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hert.base.api.enums.MenuTypeEnum;
 import com.hert.base.api.vo.RoleVO;
 import com.hert.base.mapper.MenuMapper;
 import com.hert.base.mapper.RoleMenuMapper;
@@ -38,15 +39,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 	RoleMenuMapper roleMenuMapper;
 
 	@Override
-	public List<MenuVO> buttons(String roleId) {
-		List<Menu> buttons = baseMapper.buttons(Func.toIntList(roleId));
-		MenuWrapper menuWrapper = new MenuWrapper();
-		return menuWrapper.listNodeVO(buttons);
-	}
-
-	@Override
-	public List<MenuVO> tree(List<Integer> roleId) {
-		List<RoleMenu> listRoleMenu = roleMenuMapper.selectList(new QueryWrapper<RoleMenu>().in("role_id", roleId));
+	public List<MenuVO> buttons(List<Integer> roleId) {
+		List<RoleMenu> listRoleMenu = roleMenuMapper.selectList(new QueryWrapper<RoleMenu>().in("role_id", roleId).eq("category", MenuTypeEnum.BUTTON.getCategory()));
 		List<Integer> listMenuId = listRoleMenu.stream().map(item -> {
 			return item.getMenuId();
 		}).collect(Collectors.toList());
@@ -56,14 +50,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 	}
 
 	@Override
-	public List<Kv> authRoutes(LoginUser user) {
-		if (Func.isEmpty(user)) {
-			return null;
-		}
-	//	List<MenuDTO> routes = baseMapper.authRoutes(Func.toIntList(user.getRoleId()));
-		List<Kv> list = new ArrayList<>();
-	//	routes.forEach(route -> list.add(Kv.init().set(route.getPath(), Kv.init().set("authority", Func.toStrArray(route.getAlias())))));
-		return list;
+	public List<MenuVO> tree(List<Integer> roleId) {
+		List<RoleMenu> listRoleMenu = roleMenuMapper.selectList(new QueryWrapper<RoleMenu>().in("role_id", roleId).eq("category", MenuTypeEnum.ROUTER.getCategory()));
+		List<Integer> listMenuId = listRoleMenu.stream().map(item -> {
+			return item.getMenuId();
+		}).collect(Collectors.toList());
+		List<Menu> listMenu = baseMapper.selectList(new QueryWrapper<Menu>().in("id", listMenuId));
+		List<MenuVO> collect = listMenu.stream().map(this::entityVO).collect(Collectors.toList());
+		return ForestNodeMerger.merge(collect);
 	}
 
 	private MenuVO entityVO(Menu menu) {

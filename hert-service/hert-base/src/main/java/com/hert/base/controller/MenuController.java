@@ -49,7 +49,7 @@ public class MenuController extends HertController {
 	 */
 	@PostMapping("/submit")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
-	@ApiOperationSupport(order = 3)
+	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "新增或修改", notes = "传入menu")
 	public R submit(@Valid @RequestBody Menu menu) {
 		return R.status(menuService.saveOrUpdate(menu));
@@ -61,7 +61,7 @@ public class MenuController extends HertController {
 	 */
 	@PostMapping("/remove")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
-	@ApiOperationSupport(order = 4)
+	@ApiOperationSupport(order = 3)
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(menuService.removeByIds(Func.toIntList(ids)));
@@ -71,33 +71,23 @@ public class MenuController extends HertController {
 	 * 前端按钮数据
 	 */
 	@GetMapping("/buttons")
-	@ApiOperationSupport(order = 6)
+	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "前端按钮数据", notes = "前端按钮数据")
 	public R<List<MenuVO>> buttons(LoginUser user) {
-		/*List<MenuVO> list = menuService.buttons(user.getRoleId());
-		return R.data(list);*/
-		return null;
+		List<MenuVO> list = menuService.buttons(user.getRoleId());
+		return R.data(list);
 	}
 
 	/**
 	 * 获取菜单树形结构
 	 */
 	@GetMapping("/tree")
-	@ApiOperationSupport(order = 7)
+	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "树形结构", notes = "树形结构")
 	public R<List<MenuVO>> tree(@ApiIgnore @RequestParam(required = false) List<Integer> roleIds, LoginUser user) {
 		List<MenuVO> tree = menuService.tree(Func.isNotEmpty(roleIds) ? roleIds : user.getRoleId());
 		return R.data(tree);
 	}
 
-	/**
-	 * 获取配置的角色权限
-	 */
-	@GetMapping("auth-routes")
-	@ApiOperationSupport(order = 10)
-	@ApiOperation(value = "菜单的角色权限")
-	public R<List<Kv>> authRoutes(LoginUser user) {
-		return R.data(menuService.authRoutes(user));
-	}
 
 }
