@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Profile;
  * @author hert
  */
 @Configuration
-@MapperScan("org.springhert.**.mapper.**")
+@MapperScan("com.hert.**.mapper.**")
 public class MybatisPlusConfiguration {
 
 	@Bean

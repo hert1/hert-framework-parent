@@ -1,4 +1,4 @@
-package com.hert.core.launch.constant;
+package com.hert.core.secure.constant;
 
 /**
  * Token配置常量.

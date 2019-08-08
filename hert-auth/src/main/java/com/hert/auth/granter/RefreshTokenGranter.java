@@ -3,7 +3,7 @@ package com.hert.auth.granter;
 import com.hert.base.api.dto.UserDTO;
 import com.hert.base.api.feign.IUserClient;
 import com.hert.core.secure.utils.SecureUtil;
-import com.hert.core.launch.constant.TokenConstant;
+import com.hert.core.secure.constant.TokenConstant;
 import com.hert.core.tool.api.R;
 import com.hert.core.tool.utils.Func;
 import io.jsonwebtoken.Claims;

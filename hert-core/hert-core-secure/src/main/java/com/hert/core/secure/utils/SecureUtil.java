@@ -6,7 +6,7 @@ import com.hert.core.secure.constant.SecureConstant;
 import com.hert.core.secure.exception.SecureException;
 import com.hert.core.secure.provider.IClientDetails;
 import com.hert.core.secure.provider.IClientDetailsService;
-import com.hert.core.launch.constant.TokenConstant;
+import com.hert.core.secure.constant.TokenConstant;
 import com.hert.core.tool.utils.Charsets;
 import com.hert.core.tool.utils.Func;
 import com.hert.core.tool.utils.SpringUtil;
