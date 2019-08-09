@@ -52,8 +52,8 @@ public class TokenUtil {
 		AuthInfo authInfo = new AuthInfo();
 		authInfo.setAccount(user.getAccount());
 		authInfo.setUserName(user.getRealName());
-		authInfo.setPermissions(Func.join(userDto.getPermissions()));
-		authInfo.setRoles(Func.join(userDto.getRoleName()));
+		authInfo.setPermissions(userDto.getPermissions());
+		authInfo.setRoles(userDto.getRoleName());
 		authInfo.setAccessToken(accessToken.getToken());
 		authInfo.setExpiresIn(accessToken.getExpire());
 		authInfo.setRefreshToken(createRefreshToken(userDto).getToken());
