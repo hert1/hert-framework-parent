@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * AuthInfo
  *
@@ -21,9 +23,9 @@ public class AuthInfo {
 	@ApiModelProperty(value = "头像")
 	private String avatar = "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png";
 	@ApiModelProperty(value = "权限")
-	private String permissions;
+	private List<String> permissions;
 	@ApiModelProperty(value = "角色")
-	private String roles;
+	private List<String> roles;
 	@ApiModelProperty(value = "用户名")
 	private String userName;
 	@ApiModelProperty(value = "账号名")
