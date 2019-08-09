@@ -28,8 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "用户授权认证", tags = "授权接口")
 public class AuthController {
 
-	@PostMapping("token")
-	@ApiOperation(value = "获取认证token", notes = "传入租户编号:tenantCode,账号:account,密码:password")
+	@PostMapping("checkLogin")
+	@ApiOperation(value = "检查登录", notes = "")
 	public R<AuthInfo> token(@ApiParam(value = "授权类型", required = true) @RequestParam(defaultValue = "refresh_token", required = false) String grantType) {
 		TokenParameter tokenParameter = new TokenParameter();
 		tokenParameter.getArgs().set("grantType", grantType).set("refreshToken", SecureUtil.getHeader());

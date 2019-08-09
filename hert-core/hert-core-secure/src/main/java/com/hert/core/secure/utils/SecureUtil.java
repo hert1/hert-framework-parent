@@ -37,12 +37,10 @@ public class SecureUtil {
 	private final static String ACCOUNT = TokenConstant.ACCOUNT;
 	private final static String USER_ID = TokenConstant.USER_ID;
 	private final static String ROLE_ID = TokenConstant.ROLE_ID;
-	private final static String DEPT_ID = TokenConstant.DEPT_ID;
 	private final static String USER_NAME = TokenConstant.USER_NAME;
 	private final static String ROLE_NAME = TokenConstant.ROLE_NAME;
-	private final static String DEPT_NAME = TokenConstant.DEPT_NAME;
-	private final static String TENANT_CODE = TokenConstant.TENANT_CODE;
 	private final static String PERMISSIONS = TokenConstant.PERMISSIONS;
+	private final static String PERMISSIONS_ID = TokenConstant.PERMISSIONS_ID;
 	private final static String CLIENT_ID = TokenConstant.CLIENT_ID;
 	private final static Integer AUTH_LENGTH = TokenConstant.AUTH_LENGTH;
 	private static String BASE64_SECURITY = Base64.getEncoder().encodeToString(TokenConstant.SIGN_KEY.getBytes(Charsets.UTF_8));
@@ -91,7 +89,9 @@ public class SecureUtil {
 				.clientId(Func.toStr(claims.get(SecureUtil.CLIENT_ID)))
 				.account(Func.toStr(claims.get(SecureUtil.ACCOUNT)))
 				.roleName(Func.toStrList(Func.toStr(claims.get(SecureUtil.ROLE_NAME))))
+				.roleId(Func.toIntList(Func.toStr(claims.get(SecureUtil.ROLE_ID))))
 				.permission(Func.toStrList(Func.toStr(claims.get(SecureUtil.PERMISSIONS))))
+				.permissionId(Func.toIntList(Func.toStr(claims.get(SecureUtil.PERMISSIONS_ID))))
 				.userName(Func.toStr(claims.get(SecureUtil.USER_NAME)))
 				.build();
 	}

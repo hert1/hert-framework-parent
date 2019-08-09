@@ -7,7 +7,7 @@ import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
- * Desk启动器
+ * base启动器
  *
  * @author Chill
  */

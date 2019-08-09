@@ -21,9 +21,14 @@ public enum MenuTypeEnum {
 	 * button
 	 */
 	BUTTON("button", 2),
+
+	/**
+	 * all
+	 */
+	ALL("all", 0),
 	;
 
 	final String name;
-	final int category;
+	final Integer value;
 
 }

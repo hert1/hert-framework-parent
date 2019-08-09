@@ -109,15 +109,13 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 			List<Integer> listRoleId = listUserRole.stream().map(item -> {
 				return item.getRoleId();
 			}).collect(Collectors.toList());
-			List<Role> listRole = roleMapper.selectList(new QueryWrapper<Role>().in(Func.isNotEmpty(listRoleId),"id", listRoleId.toArray()));
+			List<Role> listRole = roleMapper.selectList(new QueryWrapper<Role>().in(Func.isNotEmpty(listRoleId),"id", listRoleId));
 			// 添加角色
 			if (Func.isNotEmpty(listRole)) {
 				userDto.setRoleName(listRole.stream().map(item -> {
 					return item.getRoleAlias();
 				}).collect(Collectors.toList()));
-				userDto.setRoleId(listRole.stream().map(item -> {
-					return item.getId();
-				}).collect(Collectors.toList()));
+				userDto.setRoleId(listRoleId);
 			}
 			List<RoleMenu> listRoleMenu = roleMenuMapper.selectList(new QueryWrapper<RoleMenu>().in("role_id", listRoleId));
 			List<Menu> listMenu = null;

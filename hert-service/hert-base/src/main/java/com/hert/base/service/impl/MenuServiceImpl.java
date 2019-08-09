@@ -39,29 +39,19 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 	RoleMenuMapper roleMenuMapper;
 
 	@Override
-	public List<MenuVO> buttons(List<Integer> roleId) {
-		List<RoleMenu> listRoleMenu = roleMenuMapper.selectList(new QueryWrapper<RoleMenu>().in("role_id", roleId).eq("category", MenuTypeEnum.BUTTON.getCategory()));
+	public List<Menu> tree(Integer type, List<Integer> roleId) {
+		List<RoleMenu> listRoleMenu = roleMenuMapper.selectList(new QueryWrapper<RoleMenu>().in("role_id", roleId));
 		List<Integer> listMenuId = listRoleMenu.stream().map(item -> {
 			return item.getMenuId();
 		}).collect(Collectors.toList());
-		List<Menu> listMenu = baseMapper.selectList(new QueryWrapper<Menu>().in("id", listMenuId));
-		List<MenuVO> collect = listMenu.stream().map(this::entityVO).collect(Collectors.toList());
-		return ForestNodeMerger.merge(collect);
+		List<Menu> listMenu = null;
+		if (MenuTypeEnum.ALL.getValue() == type) {
+			listMenu = baseMapper.selectList(new QueryWrapper<Menu>().in("id", listMenuId));
+		} else {
+			listMenu = baseMapper.selectList(new QueryWrapper<Menu>().in("id", listMenuId).eq("category", type));
+		}
+		return listMenu;
 	}
 
-	@Override
-	public List<MenuVO> tree(List<Integer> roleId) {
-		List<RoleMenu> listRoleMenu = roleMenuMapper.selectList(new QueryWrapper<RoleMenu>().in("role_id", roleId).eq("category", MenuTypeEnum.ROUTER.getCategory()));
-		List<Integer> listMenuId = listRoleMenu.stream().map(item -> {
-			return item.getMenuId();
-		}).collect(Collectors.toList());
-		List<Menu> listMenu = baseMapper.selectList(new QueryWrapper<Menu>().in("id", listMenuId));
-		List<MenuVO> collect = listMenu.stream().map(this::entityVO).collect(Collectors.toList());
-		return ForestNodeMerger.merge(collect);
-	}
-
-	private MenuVO entityVO(Menu menu) {
-		return Func.copy(menu, MenuVO.class);
-	}
 
 }

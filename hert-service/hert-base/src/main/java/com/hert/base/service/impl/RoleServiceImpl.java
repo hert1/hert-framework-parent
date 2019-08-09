@@ -15,6 +15,7 @@ import com.hert.base.api.entity.Role;
 import com.hert.base.api.entity.RoleMenu;
 import com.hert.base.api.vo.RoleVO;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IRoleService {
 
+	@Autowired
 	IRoleMenuService roleMenuService;
 
 	@Override

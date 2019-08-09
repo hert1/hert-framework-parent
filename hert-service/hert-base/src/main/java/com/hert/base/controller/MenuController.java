@@ -1,5 +1,6 @@
 package com.hert.base.controller;
 
+import com.hert.base.api.enums.MenuTypeEnum;
 import com.hert.base.service.IMenuService;
 import com.hert.base.wrapper.MenuWrapper;
 import com.hert.core.boot.ctrl.HertController;
@@ -32,33 +33,24 @@ public class MenuController extends HertController {
 
 	private IMenuService menuService;
 
-	/**
-	 * 详情
-	 */
 	@GetMapping("/detail")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入menu")
+	@ApiOperation(value = "详情", notes = "传入menuForm")
 	public R<MenuVO> detail(@ApiIgnore @RequestParam Integer menuId) {
 		Menu detail = menuService.getById(menuId);
 		return R.data(MenuWrapper.build().entityVO(detail));
 	}
 
-	/**
-	 * 新增或修改
-	 */
 	@PostMapping("/submit")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "新增或修改", notes = "传入menu")
+	@ApiOperation(value = "新增或修改", notes = "传入menuForm")
 	public R submit(@Valid @RequestBody Menu menu) {
 		return R.status(menuService.saveOrUpdate(menu));
 	}
 
 
-	/**
-	 * 删除
-	 */
 	@PostMapping("/remove")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 3)
@@ -67,26 +59,23 @@ public class MenuController extends HertController {
 		return R.status(menuService.removeByIds(Func.toIntList(ids)));
 	}
 
-	/**
-	 * 前端按钮数据
-	 */
-	@GetMapping("/buttons")
+	@GetMapping("/tree")
 	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "前端按钮数据", notes = "前端按钮数据")
-	public R<List<MenuVO>> buttons(LoginUser user) {
-		List<MenuVO> list = menuService.buttons(user.getRoleId());
-		return R.data(list);
+	@ApiOperation(value = "前端全部数据", notes = "前端全部数据")
+	public R<List<MenuVO>> tree(@ApiIgnore @RequestParam(required = false) List<Integer> roleIds, LoginUser user) {
+		List<Menu> list = menuService.tree(MenuTypeEnum.ALL.getValue(), Func.isNotEmpty(roleIds) ? roleIds : user.getRoleId());
+		return R.data(MenuWrapper.build().listNodeVO(list));
 	}
 
 	/**
 	 * 获取菜单树形结构
 	 */
-	@GetMapping("/tree")
+	@GetMapping("/router")
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "树形结构", notes = "树形结构")
-	public R<List<MenuVO>> tree(@ApiIgnore @RequestParam(required = false) List<Integer> roleIds, LoginUser user) {
-		List<MenuVO> tree = menuService.tree(Func.isNotEmpty(roleIds) ? roleIds : user.getRoleId());
-		return R.data(tree);
+	public R<List<MenuVO>> router(@ApiIgnore @RequestParam(required = false) List<Integer> roleIds, LoginUser user) {
+		List<Menu> tree = menuService.tree(MenuTypeEnum.ROUTER.getValue(), Func.isNotEmpty(roleIds) ? roleIds : user.getRoleId());
+		return R.data(MenuWrapper.build().listNodeVO(tree));
 	}
 
 
