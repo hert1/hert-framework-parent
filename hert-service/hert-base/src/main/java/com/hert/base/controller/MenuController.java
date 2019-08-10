@@ -1,6 +1,7 @@
 package com.hert.base.controller;
 
 import com.hert.base.api.enums.MenuTypeEnum;
+import com.hert.base.api.form.edit.MenuForm;
 import com.hert.base.service.IMenuService;
 import com.hert.base.wrapper.MenuWrapper;
 import com.hert.core.boot.ctrl.HertController;
@@ -46,8 +47,8 @@ public class MenuController extends HertController {
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "新增或修改", notes = "传入menuForm")
-	public R submit(@Valid Menu menu) {
-		return R.status(menuService.saveOrUpdate(menu));
+	public R submit(@Valid MenuForm form) {
+		return R.status(menuService.saveOrUpdate(Func.copy(form, Menu.class)));
 	}
 
 

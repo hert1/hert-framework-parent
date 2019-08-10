@@ -49,10 +49,6 @@ public class UserWrapper extends BaseEntityWrapper<User, UserVO> {
 		}).collect(Collectors.toList());
 		userVO.setRoleName(roleName);
 		userVO.setDeptName(deptName);
-		R<String> dict = dictClient.getValue("sex", Func.toInt(user.getSex()));
-		if (dict.isSuccess()) {
-			userVO.setSexName(dict.getData());
-		}
 		return userVO;
 	}
 
