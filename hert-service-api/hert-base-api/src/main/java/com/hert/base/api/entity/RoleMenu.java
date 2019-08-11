@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -16,6 +19,9 @@ import java.io.Serializable;
  */
 @Data
 @TableName("hert_role_menu")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @ApiModel(value = "RoleMenu对象", description = "RoleMenu对象")
 public class RoleMenu implements Serializable {
 

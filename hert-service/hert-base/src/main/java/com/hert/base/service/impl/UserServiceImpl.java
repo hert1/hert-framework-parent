@@ -8,7 +8,11 @@ import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.hert.base.api.entity.*;
 import com.hert.base.api.entity.UserRole;
 import com.hert.base.api.dto.UserDTO;
+import com.hert.base.api.enums.AccountTypeEnum;
+import com.hert.base.api.enums.MenuTypeEnum;
 import com.hert.base.mapper.*;
+import com.hert.base.service.IMenuService;
+import com.hert.base.service.IRoleService;
 import com.hert.base.service.IUserService;
 import com.hert.common.constant.CommonConstant;
 import com.hert.core.mp.base.BaseServiceImpl;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,10 +42,13 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 	private RoleMapper roleMapper;
 
 	@Autowired
-	private RoleMenuMapper roleMenuMapper;
+	private IRoleService roleService;
 
 	@Autowired
 	private MenuMapper menumapper;
+
+	@Autowired
+	private IMenuService menuService;
 
 	@Override
 	public boolean submit(User user) {
@@ -104,35 +112,50 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 	private UserDTO setRoleAndPermissionInUser (User user) {
 		UserDTO userDto = new UserDTO();
 		userDto.setUser(user);
-		if (Func.isNotEmpty(user)) {
-			List<UserRole> listUserRole = userRoleMapper.selectList(new QueryWrapper<UserRole>().eq("user_id", user.getId()));
-			List<Integer> listRoleId = listUserRole.stream().map(item -> {
-				return item.getRoleId();
-			}).collect(Collectors.toList());
-			List<Role> listRole = roleMapper.selectList(new QueryWrapper<Role>().in(Func.isNotEmpty(listRoleId),"id", listRoleId));
+		if (user.getAccountType() == AccountTypeEnum.SU_ADMIN.getValue()) {
+			List<Role> listRole = roleMapper.selectList(new QueryWrapper<Role>());
 			// 添加角色
 			if (Func.isNotEmpty(listRole)) {
 				userDto.setRoleName(listRole.stream().map(item -> {
 					return item.getRoleAlias();
 				}).collect(Collectors.toList()));
-				userDto.setRoleId(listRoleId);
-			}
-			List<RoleMenu> listRoleMenu = roleMenuMapper.selectList(new QueryWrapper<RoleMenu>().in("role_id", listRoleId));
-			List<Menu> listMenu = null;
-			if (Func.isNotEmpty(listRoleMenu)) {
-				List<Integer> listMenuId = listRoleMenu.stream().map(item -> {
-					return item.getMenuId();
-				}).collect(Collectors.toList());
-				listMenu = menumapper.selectList(new QueryWrapper<Menu>().in("id", listMenuId));
-			}
-			//添加权限
-			if (Func.isNotEmpty(listMenu)) {
-				userDto.setPermissions(listMenu.stream().map(item -> {
-					return item.getCode();
-				}).collect(Collectors.toList()));
-				userDto.setPermissionsId(listMenu.stream().map(item -> {
+				userDto.setRoleId(listRole.stream().map(item -> {
 					return item.getId();
 				}).collect(Collectors.toList()));
+				List<Menu> listMenu = menumapper.selectList(new QueryWrapper<Menu>());
+				if (Func.isNotEmpty(listMenu)) {
+					userDto.setPermissions(listMenu.stream().map(item -> {
+						return item.getCode();
+					}).collect(Collectors.toList()));
+					userDto.setPermissionsId(listMenu.stream().map(item -> {
+						return item.getId();
+					}).collect(Collectors.toList()));
+				}
+			}
+		} else {
+			if (Func.isNotEmpty(user)) {
+				// 添加角色
+				List<Role> listRole = roleService.selectRoleByUserId(user.getId());
+				List<Integer> listRoleId = Arrays.asList();
+				if (Func.isNotEmpty(listRole)) {
+					listRoleId = listRole.stream().map(item -> {
+						return item.getId();
+					}).collect(Collectors.toList());
+					userDto.setRoleName(listRole.stream().map(item -> {
+						return item.getRoleAlias();
+					}).collect(Collectors.toList()));
+					userDto.setRoleId(listRoleId);
+				}
+				//添加权限
+				List<Menu> listMenu = menuService.list(MenuTypeEnum.ALL.getValue(), listRoleId);
+				if (Func.isNotEmpty(listMenu)) {
+					userDto.setPermissions(listMenu.stream().map(item -> {
+						return item.getCode();
+					}).collect(Collectors.toList()));
+					userDto.setPermissionsId(listMenu.stream().map(item -> {
+						return item.getId();
+					}).collect(Collectors.toList()));
+				}
 			}
 		}
 		return userDto;

@@ -63,6 +63,10 @@ public class User extends BaseEntity {
 	 * 性别
 	 */
 	private Integer sex;
+	/**
+	 * 账号类型
+	 */
+	private Integer accountType;
 
 
 }

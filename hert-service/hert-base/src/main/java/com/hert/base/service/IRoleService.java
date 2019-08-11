@@ -3,6 +3,7 @@ package com.hert.base.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hert.base.api.entity.Role;
+import com.hert.base.api.form.edit.RoleForm;
 import com.hert.base.api.vo.RoleVO;
 import com.hert.core.tool.node.INode;
 
@@ -16,14 +17,6 @@ import java.util.List;
  */
 public interface IRoleService extends IService<Role> {
 
-	/**
-	 * 自定义分页
-	 *
-	 * @param page
-	 * @param role
-	 * @return
-	 */
-	IPage<RoleVO> selectRolePage(IPage<RoleVO> page, RoleVO role);
 
 	/**
 	 * 查询角色通过用户id
@@ -42,12 +35,9 @@ public interface IRoleService extends IService<Role> {
 	List<INode> tree(Integer userId);
 
 	/**
-	 * 权限配置
-	 *
-	 * @param roleIds 角色id集合
-	 * @param menuIds 菜单id集合
-	 * @return 是否成功
+	 * 新增或修改
 	 */
-	boolean grant(@NotEmpty List<Integer> roleIds, @NotEmpty List<Integer> menuIds);
+	Boolean saveOrUpdate(RoleForm form);
+
 
 }

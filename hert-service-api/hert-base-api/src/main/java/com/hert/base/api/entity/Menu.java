@@ -104,19 +104,4 @@ public class Menu implements Serializable {
 	private Integer isDeleted;
 
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		Menu other = (Menu) obj;
-		if (Func.equals(this.getId(), other.getId())) {
-			return true;
-		}
-		return false;
-	}
-
 }

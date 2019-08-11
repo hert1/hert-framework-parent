@@ -16,6 +16,7 @@ public interface TokenConstant {
 	String TOKEN_TYPE = "token_type";
 	String EXPIRES_IN = "expires_in";
 	String ACCOUNT = "account";
+	String ACCOUNT_TYPE = "account_type";
 	String USER_ID = "user_id";
 	String ROLE_ID = "role_id";
 	String DEPT_ID = "dept_id";

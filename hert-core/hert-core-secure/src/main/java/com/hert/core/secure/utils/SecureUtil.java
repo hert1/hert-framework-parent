@@ -35,6 +35,7 @@ public class SecureUtil {
 	private final static String HEADER = TokenConstant.HEADER;
 	private final static String BEARER = TokenConstant.BEARER;
 	private final static String ACCOUNT = TokenConstant.ACCOUNT;
+	private final static String ACCOUNT_TYPE = TokenConstant.ACCOUNT_TYPE;
 	private final static String USER_ID = TokenConstant.USER_ID;
 	private final static String ROLE_ID = TokenConstant.ROLE_ID;
 	private final static String USER_NAME = TokenConstant.USER_NAME;
@@ -93,6 +94,7 @@ public class SecureUtil {
 				.permission(Func.toStrList(Func.toStr(claims.get(SecureUtil.PERMISSIONS))))
 				.permissionId(Func.toIntList(Func.toStr(claims.get(SecureUtil.PERMISSIONS_ID))))
 				.userName(Func.toStr(claims.get(SecureUtil.USER_NAME)))
+				.accountType(Func.toInt(Func.toStr(claims.get(SecureUtil.ACCOUNT_TYPE))))
 				.build();
 	}
 
@@ -167,7 +169,7 @@ public class SecureUtil {
 	 */
 	public static List<String> getUserRole() {
 		LoginUser user = getUser();
-		return (null == user) ? null : user.getRoleName();
+		return (null == user) ? Arrays.asList() : user.getRoleName();
 	}
 
 	/**

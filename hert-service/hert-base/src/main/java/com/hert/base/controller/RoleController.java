@@ -1,5 +1,6 @@
 package com.hert.base.controller;
 
+import com.hert.base.api.form.edit.RoleForm;
 import com.hert.base.service.IRoleService;
 import com.hert.base.wrapper.RoleWrapper;
 import com.hert.core.boot.ctrl.HertController;
@@ -38,17 +39,6 @@ public class RoleController extends HertController {
 	private IRoleService roleService;
 
 	/**
-	 * 详情
-	 */
-	@GetMapping("/detail")
-	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入roleId")
-	public R<RoleVO> detail(@ApiIgnore @RequestParam Integer roleId) {
-		Role detail = roleService.getById(roleId);
-		return R.data(RoleWrapper.build().entityVO(detail));
-	}
-
-	/**
 	 * 获取角色树形结构
 	 */
 	@GetMapping("/tree")
@@ -65,8 +55,8 @@ public class RoleController extends HertController {
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "新增或修改", notes = "传入role")
-	public R submit(@Valid Role role, LoginUser user) {
-		return R.status(roleService.saveOrUpdate(role));
+	public R submit(@Valid RoleForm form, LoginUser user) {
+		return R.status(roleService.saveOrUpdate(form));
 	}
 
 
@@ -78,22 +68,6 @@ public class RoleController extends HertController {
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(roleService.removeByIds(Func.toIntList(ids)));
-	}
-
-	/**
-	 * 设置菜单权限
-	 *
-	 * @param roleIds
-	 * @param menuIds
-	 * @return
-	 */
-	@PostMapping("/grant")
-	@ApiOperationSupport(order = 6)
-	@ApiOperation(value = "权限设置", notes = "传入roleId集合以及menuId集合")
-	public R grant(@ApiParam(value = "roleId集合", required = true) @RequestParam String roleIds,
-				   @ApiParam(value = "menuId集合", required = true) @RequestParam String menuIds) {
-		boolean temp = roleService.grant(Func.toIntList(roleIds), Func.toIntList(menuIds));
-		return R.status(temp);
 	}
 
 }

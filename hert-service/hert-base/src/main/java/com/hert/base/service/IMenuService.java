@@ -17,13 +17,13 @@ import java.util.List;
 public interface IMenuService extends IService<Menu> {
 
 	/**
-	 * 树形结构
+	 * list结构
 	 *
 	 * @param type
 	 * @param roleId
 	 * @return
 	 */
-	List<Menu> tree(Integer type, List<Integer> roleId);
+	List<Menu> list(Integer type, List<Integer> roleId);
 
 
 }

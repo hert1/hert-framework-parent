@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hert.base.api.form.edit.RoleForm;
 import com.hert.base.mapper.RoleMapper;
 import com.hert.base.service.IRoleMenuService;
 import com.hert.base.service.IRoleService;
+import com.hert.core.secure.utils.SecureUtil;
 import com.hert.core.tool.node.ForestNodeMerger;
 import com.hert.core.tool.node.INode;
 import com.hert.core.tool.utils.CollectionUtil;
@@ -17,6 +19,7 @@ import com.hert.base.api.vo.RoleVO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
@@ -36,14 +39,15 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 	@Autowired
 	IRoleMenuService roleMenuService;
 
-	@Override
-	public IPage<RoleVO> selectRolePage(IPage<RoleVO> page, RoleVO role) {
-		return page.setRecords(baseMapper.selectRolePage(page, role));
-	}
 
 	@Override
 	public List<Role> selectRoleByUserId(Integer userId) {
-		List<Role> roles = baseMapper.selectRoleByUserId(userId);
+		List<Role> roles = Arrays.asList();
+		if(SecureUtil.getUserRole().contains("administrator")) {
+			roles = baseMapper.selectList(new QueryWrapper<Role>());
+		} else {
+			roles = baseMapper.selectRoleByUserId(userId);
+		}
 		Set<Role> childrenRole = selectChildren(roles);
 		childrenRole.addAll(roles);
 		roles.clear();
@@ -59,20 +63,16 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 	}
 
 	@Override
-	public boolean grant(@NotEmpty List<Integer> roleIds, @NotEmpty List<Integer> menuIds) {
-		// 删除角色配置的菜单集合
-		roleMenuService.remove(Wrappers.<RoleMenu>update().lambda().in(RoleMenu::getRoleId, roleIds));
-		// 组装配置
-		List<RoleMenu> roleMenus = new ArrayList<>();
-		roleIds.forEach(roleId -> menuIds.forEach(menuId -> {
-			RoleMenu roleMenu = new RoleMenu();
-			roleMenu.setRoleId(roleId);
-			roleMenu.setMenuId(menuId);
-			roleMenus.add(roleMenu);
-		}));
-		// 新增配置
-		return roleMenuService.saveBatch(roleMenus);
+	@Transactional
+	public Boolean saveOrUpdate(RoleForm form) {
+		Role role = Func.copy(form, Role.class);
+		boolean saveRole = this.saveOrUpdate(role);
+		List<Integer> permissions = form.getPermissions();
+		roleMenuService.remove(new QueryWrapper<RoleMenu>().eq("role_id", role.getId()));
+		boolean saveRoleMenu = roleMenuService.saveBatch(permissions.stream().map(item -> RoleMenu.builder().menuId(item).roleId(role.getId()).build()).collect(Collectors.toList()));
+		return saveRole && saveRoleMenu;
 	}
+
 
 	private RoleVO entityVO(Role role) {
 		return Func.copy(role, RoleVO.class);

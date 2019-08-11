@@ -39,6 +39,11 @@ public class LoginUser implements Serializable {
 	@ApiModelProperty(hidden = true)
 	private String account;
 	/**
+	 * 账号类型
+	 */
+	@ApiModelProperty(hidden = true)
+	private Integer accountType;
+	/**
 	 * 角色id
 	 */
 	@ApiModelProperty(hidden = true)
