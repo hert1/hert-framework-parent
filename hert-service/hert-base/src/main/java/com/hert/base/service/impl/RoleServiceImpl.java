@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hert.base.api.enums.AccountTypeEnum;
 import com.hert.base.api.form.edit.RoleForm;
 import com.hert.base.mapper.RoleMapper;
 import com.hert.base.service.IRoleMenuService;
@@ -43,7 +44,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 	@Override
 	public List<Role> selectRoleByUserId(Integer userId) {
 		List<Role> roles = Arrays.asList();
-		if(SecureUtil.getUserRole().contains("administrator")) {
+		if(SecureUtil.getAccountType() == AccountTypeEnum.SU_ADMIN.getValue()) {
 			roles = baseMapper.selectList(new QueryWrapper<Role>());
 		} else {
 			roles = baseMapper.selectRoleByUserId(userId);
@@ -69,7 +70,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 		boolean saveRole = this.saveOrUpdate(role);
 		List<Integer> permissions = form.getPermissions();
 		roleMenuService.remove(new QueryWrapper<RoleMenu>().eq("role_id", role.getId()));
-		boolean saveRoleMenu = roleMenuService.saveBatch(permissions.stream().map(item -> RoleMenu.builder().menuId(item).roleId(role.getId()).build()).collect(Collectors.toList()));
+		boolean saveRoleMenu = true;
+		if(Func.isNotEmpty(permissions)) {
+			saveRoleMenu = roleMenuService.saveBatch(permissions.stream().map(item -> RoleMenu.builder().menuId(item).roleId(role.getId()).build()).collect(Collectors.toList()));
+
+		}
 		return saveRole && saveRoleMenu;
 	}
 

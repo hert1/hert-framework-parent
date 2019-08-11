@@ -40,4 +40,9 @@ public class RoleVO extends Role implements INode {
 	 * 上级角色
 	 */
 	private String parentName;
+
+	/**
+	 * 权限
+	 */
+	private List<Integer> permissions;
 }

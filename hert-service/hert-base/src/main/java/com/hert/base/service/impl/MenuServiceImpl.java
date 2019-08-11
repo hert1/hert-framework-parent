@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.hert.base.api.enums.AccountTypeEnum;
 import com.hert.base.api.enums.MenuTypeEnum;
 import com.hert.base.api.vo.RoleVO;
 import com.hert.base.mapper.MenuMapper;
@@ -50,7 +51,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 			return item.getMenuId();
 		}).collect(Collectors.toList());
 		List<Menu> listMenu = Arrays.asList();
-		if(SecureUtil.getUserRole().contains("administrator")) {
+		if(SecureUtil.getAccountType() == AccountTypeEnum.SU_ADMIN.getValue()) {
 			listMenu = baseMapper.selectList(new QueryWrapper<Menu>().eq(MenuTypeEnum.ALL.getValue() != type, "category", type));
 		} else {
 			if(Func.isNotEmpty(listMenuId)) {
@@ -58,10 +59,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
 			}
 		}
+		//先添加当前菜单的子菜单，保证一旦有了父菜单其也一定存在子菜单
 		Set<Menu> childrenMenu = selectChildren(type, listMenu);
 		childrenMenu.addAll(listMenu);
+		//在添加父菜单，保证其前端页面加载到的是一个完整的树结构，不然只查询到子菜单前端路由无法显示
+		//必须先添加子菜单，在添加父菜单，一旦反过来会直接将当前菜单的父菜单以及同级菜单和同级菜单的所有子菜单全部加载
+		Set<Menu> parentMenu = selectParent(type, listMenu);
+		//去重
+		parentMenu.addAll(childrenMenu);
 		listMenu.clear();
-		listMenu.addAll(childrenMenu);
+		listMenu.addAll(parentMenu);
 		return listMenu;
 	}
 
@@ -81,5 +88,23 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 			}
 		}
 		return childrenMenu;
+	}
+
+	private Set<Menu> selectParent(Integer type, List<Menu> listMenu) {
+		Set<Menu> parentMenu = new HashSet<>();
+		if (CollectionUtil.isEmpty(listMenu)) {
+			return parentMenu;
+		}
+		for (Menu menu : listMenu) {
+			List<Menu> parent = baseMapper.selectList(new QueryWrapper<Menu>().eq("id", menu.getParentId()).eq(MenuTypeEnum.ALL.getValue() != type, "category", type));
+			if (CollectionUtil.isNotEmpty(parent)) {
+				parentMenu.addAll(parent);
+			}
+			Set<Menu> nextParent = selectParent(type, parent);
+			if (CollectionUtil.isNotEmpty(nextParent)) {
+				parentMenu.addAll(nextParent);
+			}
+		}
+		return parentMenu;
 	}
 }

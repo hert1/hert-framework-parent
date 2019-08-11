@@ -1,6 +1,10 @@
 package com.hert.base.wrapper;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.hert.base.api.entity.RoleMenu;
+import com.hert.base.mapper.RoleMenuMapper;
+import com.hert.base.service.IRoleMenuService;
 import com.hert.base.service.IRoleService;
 import com.hert.common.constant.CommonConstant;
 import com.hert.core.mp.support.BaseEntityWrapper;
@@ -23,9 +27,11 @@ import java.util.stream.Collectors;
 public class RoleWrapper extends BaseEntityWrapper<Role, RoleVO> {
 
 	private static IRoleService roleService;
+	private static IRoleMenuService roleMenuService;
 
 	static {
 		roleService = SpringUtil.getBean(IRoleService.class);
+		roleMenuService = SpringUtil.getBean(IRoleMenuService.class);
 	}
 
 	public static RoleWrapper build() {
@@ -40,6 +46,10 @@ public class RoleWrapper extends BaseEntityWrapper<Role, RoleVO> {
 		} else {
 			Role parent = roleService.getById(role.getParentId());
 			roleVO.setParentName(parent.getRoleName());
+		}
+		List<RoleMenu> listRoleMenu = roleMenuService.list(new QueryWrapper<RoleMenu>().eq("role_id", role.getId()));
+		if(Func.isNotEmpty(listRoleMenu)) {
+			roleVO.setPermissions(listRoleMenu.stream().map(item -> item.getMenuId()).collect(Collectors.toList()));
 		}
 		return roleVO;
 	}
