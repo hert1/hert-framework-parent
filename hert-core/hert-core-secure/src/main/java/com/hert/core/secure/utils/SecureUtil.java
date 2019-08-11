@@ -110,6 +110,16 @@ public class SecureUtil {
 	}
 
 	/**
+	 * 获取用户类型
+	 *
+	 * @return accountType
+	 */
+	public static Integer getAccountType() {
+		LoginUser user = getUser();
+		return (null == user) ? -1 : user.getAccountType();
+	}
+
+	/**
 	 * 获取用户id
 	 *
 	 * @param request request
