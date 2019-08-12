@@ -11,6 +11,7 @@ import com.hert.base.api.dto.UserDTO;
 import com.hert.base.api.enums.AccountTypeEnum;
 import com.hert.base.api.enums.MenuTypeEnum;
 import com.hert.base.mapper.*;
+import com.hert.base.service.IDeptService;
 import com.hert.base.service.IMenuService;
 import com.hert.base.service.IRoleService;
 import com.hert.base.service.IUserService;
@@ -44,6 +45,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 	@Autowired
 	private IRoleService roleService;
 
+    @Autowired
+    private IDeptService deptService;
+
 	@Autowired
 	private MenuMapper menumapper;
 
@@ -64,7 +68,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
 	@Override
 	public IPage<User> selectUserPage(IPage<User> page, User user) {
-		return page.setRecords(baseMapper.selectUserPage(page, user));
+		return null;
 	}
 
 	@Override
@@ -101,12 +105,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
 	@Override
 	public List<String> getRoleName(String roleIds) {
-		return baseMapper.getRoleName(Func.toStrArray(roleIds));
+        List<Role> listRole = roleService.list(new QueryWrapper<Role>().lambda().in(Role::getId, roleIds));
+        return listRole.stream().map(item -> item.getRoleName()).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<String> getDeptName(String deptIds) {
-		return baseMapper.getDeptName(Func.toStrArray(deptIds));
+        List<Dept> listDept = deptService.list(new QueryWrapper<Dept>().lambda().in(Dept::getId, deptIds));
+        return listDept.stream().map(item -> item.getDeptName()).collect(Collectors.toList());
 	}
 
 	private UserDTO setRoleAndPermissionInUser (User user) {

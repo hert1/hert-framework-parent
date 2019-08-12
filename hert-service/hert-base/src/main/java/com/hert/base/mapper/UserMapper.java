@@ -15,47 +15,5 @@ import java.util.List;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
-	/**
-	 * 自定义分页
-	 *
-	 * @param page
-	 * @param user
-	 * @return
-	 */
-	List<User> selectUserPage(IPage page, User user);
-
-	/**
-	 * 获取用户
-	 *
-	 * @param tenantCode
-	 * @param account
-	 * @param password
-	 * @return
-	 */
-	User getUser(String tenantCode, String account, String password);
-
-	/**
-	 * 获取角色名
-	 *
-	 * @param ids
-	 * @return
-	 */
-	List<String> getRoleName(String[] ids);
-
-	/**
-	 * 获取角色别名
-	 *
-	 * @param ids
-	 * @return
-	 */
-	List<String> getRoleAlias(String[] ids);
-
-	/**
-	 * 获取部门名
-	 *
-	 * @param ids
-	 * @return
-	 */
-	List<String> getDeptName(String[] ids);
 
 }

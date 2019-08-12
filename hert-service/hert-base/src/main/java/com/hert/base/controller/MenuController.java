@@ -75,7 +75,7 @@ public class MenuController extends HertController {
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "树形结构", notes = "树形结构")
 	public R<List<MenuVO>> router(@ApiIgnore @RequestParam(required = false) List<Integer> roleIds, LoginUser user) {
-		List<Menu> tree = menuService.list(MenuTypeEnum.ROUTER.getValue(), Func.isNotEmpty(roleIds) ? roleIds : user.getRoleId());
+		List<Menu> tree = menuService.routerList(MenuTypeEnum.ROUTER.getValue(), Func.isNotEmpty(roleIds) ? roleIds : user.getRoleId());
 		return R.data(MenuWrapper.build().listNodeVO(tree));
 	}
 

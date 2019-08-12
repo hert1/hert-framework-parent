@@ -25,5 +25,14 @@ public interface IMenuService extends IService<Menu> {
 	 */
 	List<Menu> list(Integer type, List<Integer> roleId);
 
+	/**
+	 * routerList结构
+	 *
+	 * @param type
+	 * @param roleId
+	 * @return
+	 */
+	List<Menu> routerList(Integer type, List<Integer> roleId);
+
 
 }

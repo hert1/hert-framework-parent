@@ -18,24 +18,7 @@ import java.util.List;
 public interface DeptMapper extends BaseMapper<Dept> {
 
 	/**
-	 * 自定义分页
-	 *
-	 * @param page
-	 * @param dept
-	 * @return
-	 */
-	List<DeptVO> selectDeptPage(IPage page, DeptVO dept);
-
-	/**
-	 * 获取树形节点
-	 *
-	 * @param tenantCode
-	 * @return
-	 */
-	List<DeptVO> tree(String tenantCode);
-
-	/**
-	 * 查询角色通过用户id
+	 * 查询部门通过用户id
 	 *
 	 * @param userId
 	 * @return
