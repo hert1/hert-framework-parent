@@ -1,6 +1,7 @@
 package com.hert.base.controller;
 
 import com.hert.base.api.entity.Dept;
+import com.hert.base.api.form.edit.DeptForm;
 import com.hert.base.service.IDeptService;
 import com.hert.base.api.vo.DeptVO;
 import com.hert.base.wrapper.DeptWrapper;
@@ -40,31 +41,6 @@ public class DeptController extends HertController {
 	private IDeptService deptService;
 
 	/**
-	 * 详情
-	 */
-	@GetMapping("/detail")
-	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入dept")
-	public R<DeptVO> detail(@ApiIgnore @RequestParam Integer deptId) {
-		Dept detail = deptService.getById(deptId);
-		return R.data(DeptWrapper.build().entityVO(detail));
-	}
-
-	/**
-	 * 列表
-	 */
-	@GetMapping("/list")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "userId", value = "部门名称", paramType = "query", dataType = "string"),
-	})
-	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "列表", notes = "传入dept")
-	public R<List<INode>> list(@ApiIgnore @RequestParam(required = false) Integer userId, LoginUser loginUser) {
-		List<Dept> list = deptService.selectDeptByUserId(Func.toInt(userId, loginUser.getUserId()));
-		return R.data(DeptWrapper.build().listNodeVO(list));
-	}
-
-	/**
 	 * 获取部门树形结构
 	 *
 	 * @return
@@ -83,8 +59,8 @@ public class DeptController extends HertController {
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "新增或修改", notes = "传入dept")
-	public R submit(@Valid Dept dept, LoginUser user) {
-		return R.status(deptService.saveOrUpdate(dept));
+	public R submit(@Valid DeptForm form, LoginUser user) {
+		return R.status(deptService.saveOrUpdate(Func.copy(form, Dept.class)));
 	}
 
 	/**

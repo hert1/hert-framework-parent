@@ -18,14 +18,15 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(value = "RoleForm对象", description = "RoleForm对象")
-public class RoleForm {
+@ApiModel(value = "DeptForm对象", description = "DeptForm对象")
+public class DeptForm {
 
 
     /**
      * 主键
      */
     @ApiModelProperty(value = "主键")
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -35,28 +36,22 @@ public class RoleForm {
     private Integer parentId;
 
     /**
-     * 角色名
+     * 部门名
      */
-    @ApiModelProperty(value = "角色名")
-    private String roleName;
+    @ApiModelProperty(value = "部门名")
+    private String deptName;
+
+    /**
+     * 部门全称
+     */
+    @ApiModelProperty(value = "部门全称")
+    private String fullName;
 
     /**
      * 排序
      */
     @ApiModelProperty(value = "排序")
     private Integer sort;
-
-    /**
-     * 角色别名
-     */
-    @ApiModelProperty(value = "角色别名")
-    private String roleAlias;
-
-    /**
-     * 权限
-     */
-    @ApiModelProperty(value = "权限")
-    private List<Integer> permissions;
 
 
 }

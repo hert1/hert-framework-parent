@@ -30,11 +30,8 @@ public class RefreshTokenGranter implements ITokenGranter {
 		UserDTO userDto = null;
 		if (Func.isNoneBlank(grantType, refreshToken) && grantType.equals(TokenConstant.REFRESH_TOKEN)) {
 			Claims claims = SecureUtil.getClaims(refreshToken);
-		//	String tokenType = Func.toStr(Objects.requireNonNull(claims).get(TokenConstant.TOKEN_TYPE));
-		//	if (tokenType.equals(TokenConstant.REFRESH_TOKEN)) {
-				R<UserDTO> result = userClient.userInfo(Func.toInt(claims.get(TokenConstant.USER_ID)));
-				userDto = result.isSuccess() ? result.getData() : null;
-		//	}
+			R<UserDTO> result = userClient.userInfo(Func.toInt(claims.get(TokenConstant.USER_ID)));
+			userDto = result.isSuccess() ? result.getData() : null;
 		}
 		return userDto;
 	}

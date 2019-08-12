@@ -56,12 +56,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 		return roles;
 	}
 
-	@Override
-	public List<INode> tree(Integer userId) {
-		List<Role> ListRole = this.selectRoleByUserId(userId);
-		List<INode> collect = ListRole.stream().map(this::entityVO).collect(Collectors.toList());
-		return ForestNodeMerger.merge(collect);
-	}
 
 	@Override
 	@Transactional
@@ -78,10 +72,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 		return saveRole && saveRoleMenu;
 	}
 
-
-	private RoleVO entityVO(Role role) {
-		return Func.copy(role, RoleVO.class);
+	@Override
+	public List<String> getRoleName(String roleIds) {
+		List<Role> listRole = this.list(new QueryWrapper<Role>().lambda().in(Role::getId, roleIds));
+		return listRole.stream().map(item -> item.getRoleName()).collect(Collectors.toList());
 	}
+
 
 	private Set<Role> selectChildren(List<Role> listRole) {
 		Set<Role> childrenRole = new HashSet<>();

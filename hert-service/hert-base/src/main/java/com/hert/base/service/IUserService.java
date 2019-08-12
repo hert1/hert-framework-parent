@@ -17,6 +17,7 @@ package com.hert.base.service;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.hert.base.api.form.edit.UserForm;
 import com.hert.core.mp.base.BaseService;
 import com.hert.base.api.entity.User;
 import com.hert.base.api.dto.UserDTO;
@@ -33,19 +34,10 @@ public interface IUserService extends BaseService<User> {
 	/**
 	 * 新增或修改用户
 	 *
-	 * @param user
+	 * @param form
 	 * @return
 	 */
-	boolean submit(User user);
-
-	/**
-	 * 自定义分页
-	 *
-	 * @param page
-	 * @param user
-	 * @return
-	 */
-	IPage<User> selectUserPage(IPage<User> page, User user);
+	boolean submit(UserForm form);
 
 	/**
 	 * 用户信息
@@ -65,15 +57,6 @@ public interface IUserService extends BaseService<User> {
 	UserDTO userInfo(String account, String password);
 
 	/**
-	 * 给用户设置角色
-	 *
-	 * @param userIds
-	 * @param roleIds
-	 * @return
-	 */
-	boolean grant(String userIds, String roleIds);
-
-	/**
 	 * 初始化密码
 	 *
 	 * @param userIds
@@ -81,19 +64,4 @@ public interface IUserService extends BaseService<User> {
 	 */
 	boolean resetPassword(String userIds);
 
-	/**
-	 * 获取角色名
-	 *
-	 * @param roleIds
-	 * @return
-	 */
-	List<String> getRoleName(String roleIds);
-
-	/**
-	 * 获取部门名
-	 *
-	 * @param deptIds
-	 * @return
-	 */
-	List<String> getDeptName(String deptIds);
 }

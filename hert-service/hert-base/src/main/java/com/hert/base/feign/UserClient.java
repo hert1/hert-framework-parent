@@ -20,6 +20,7 @@ public class UserClient implements IUserClient {
 	private IUserService service;
 
 	@Override
+	@GetMapping(API_PREFIX + "/user-info-by-id")
 	public R<UserDTO> userInfo(Integer userId) {
 		return R.data(service.userInfo(userId));
 	}

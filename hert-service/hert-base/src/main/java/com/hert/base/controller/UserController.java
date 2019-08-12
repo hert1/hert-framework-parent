@@ -3,6 +3,7 @@ package com.hert.base.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.hert.base.api.form.edit.UserForm;
 import com.hert.base.service.IUserService;
 import com.hert.core.mp.support.Condition;
 import com.hert.core.mp.support.Query;
@@ -73,19 +74,9 @@ public class UserController {
 	 */
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 3)
-	@ApiOperation(value = "新增或修改", notes = "传入User")
-	public R submit(@Valid @RequestBody User user) {
-		return R.status(userService.submit(user));
-	}
-
-	/**
-	 * 修改
-	 */
-	@PostMapping("/update")
-	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "修改", notes = "传入User")
-	public R update(@Valid @RequestBody User user) {
-		return R.status(userService.updateById(user));
+	@ApiOperation(value = "新增或修改", notes = "传入UserForm")
+	public R submit(@Valid UserForm form) {
+		return R.status(userService.submit(form));
 	}
 
 	/**
@@ -98,22 +89,6 @@ public class UserController {
 		return R.status(userService.deleteLogic(Func.toIntList(ids)));
 	}
 
-
-	/**
-	 * 设置角色
-	 *
-	 * @param userIds
-	 * @param roleIds
-	 * @return
-	 */
-	@PostMapping("/grant")
-	@ApiOperationSupport(order = 6)
-	@ApiOperation(value = "权限设置", notes = "传入roleId集合以及userId集合")
-	public R grant(@ApiParam(value = "userId集合", required = true) @RequestParam String userIds,
-				   @ApiParam(value = "roleId集合", required = true) @RequestParam String roleIds) {
-		boolean temp = userService.grant(userIds, roleIds);
-		return R.status(temp);
-	}
 
 	@PostMapping("/reset-password")
 	@ApiOperationSupport(order = 7)

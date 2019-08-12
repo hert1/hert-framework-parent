@@ -57,25 +57,10 @@ public class TokenUtil {
 		authInfo.setRoles(userDto.getRoleName());
 		authInfo.setAccessToken(accessToken.getToken());
 		authInfo.setExpiresIn(accessToken.getExpire());
-		authInfo.setRefreshToken(createRefreshToken(userDto).getToken());
 		authInfo.setTokenType(TokenConstant.BEARER);
 		authInfo.setLicense(TokenConstant.LICENSE_NAME);
 
 		return authInfo;
-	}
-
-	/**
-	 * 创建refreshToken
-	 *
-	 * @param userDto 用户信息
-	 * @return refreshToken
-	 */
-	private static TokenInfo createRefreshToken(UserDTO userDto) {
-		User user = userDto.getUser();
-		Map<String, String> param = new HashMap<>(16);
-		param.put(TokenConstant.TOKEN_TYPE, TokenConstant.REFRESH_TOKEN);
-		param.put(TokenConstant.USER_ID, Func.toStr(user.getId()));
-		return SecureUtil.createJWT(param, "audience", "issuser", TokenConstant.REFRESH_TOKEN);
 	}
 
 	/**
