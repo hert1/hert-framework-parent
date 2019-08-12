@@ -14,6 +14,8 @@ import java.util.List;
 @Data
 @ApiModel(description = "认证信息")
 public class AuthInfo {
+    @ApiModelProperty(value = "id")
+    private Integer id ;
 	@ApiModelProperty(value = "令牌")
 	private String accessToken;
 	@ApiModelProperty(value = "令牌类型")
