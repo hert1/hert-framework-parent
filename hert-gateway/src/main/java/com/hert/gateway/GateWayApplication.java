@@ -7,7 +7,7 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * 项目启动
+ * 项目启动    
  *
  * @author Chill
  */
