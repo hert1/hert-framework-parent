@@ -50,8 +50,8 @@ public class UserController {
 			@ApiImplicitParam(name = "id", value = "账号id", paramType = "query", dataType = "Integer"),
 	})
 	@GetMapping("/detail")
-	public R<UserVO> detail(@ApiIgnore @RequestParam Integer id) {
-		User detail = userService.getById(id);
+	public R<UserVO> detail(@ApiIgnore @RequestParam(required = false) Integer id, LoginUser loginUser) {
+		User detail = userService.getById(Func.toInt(id, loginUser.getUserId()));
 		return R.data(UserWrapper.build().entityVO(detail));
 	}
 

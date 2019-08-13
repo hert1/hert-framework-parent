@@ -44,7 +44,7 @@ public class DeptWrapper extends BaseEntityWrapper<Dept, DeptVO> {
 	}
 
 	public List<INode> listNodeVO(List<Dept> list) {
-		List<INode> collect = list.stream().map(dept -> BeanUtil.copy(dept, DeptVO.class)).collect(Collectors.toList());
+		List<INode> collect = list.stream().map(this::entityVO).collect(Collectors.toList());
 		return ForestNodeMerger.merge(collect);
 	}
 

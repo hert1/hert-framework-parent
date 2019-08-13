@@ -37,4 +37,9 @@ public class UserVO extends User {
 	 * 性别
 	 */
 	private String sexName;
+
+	/**
+	 * 上级name
+	 */
+	private String parentName;
 }

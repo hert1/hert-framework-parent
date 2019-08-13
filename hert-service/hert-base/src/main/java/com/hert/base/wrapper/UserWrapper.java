@@ -4,8 +4,11 @@ package com.hert.base.wrapper;
 import com.hert.base.api.enums.SexEnum;
 import com.hert.base.service.IDeptService;
 import com.hert.base.service.IRoleService;
+import com.hert.base.service.IUserService;
+import com.hert.common.constant.CommonConstant;
 import com.hert.core.mp.support.BaseEntityWrapper;
 import com.hert.core.tool.utils.BeanUtil;
+import com.hert.core.tool.utils.Func;
 import com.hert.core.tool.utils.SpringUtil;
 import com.hert.base.api.entity.User;
 import com.hert.base.api.vo.UserVO;
@@ -22,10 +25,12 @@ public class UserWrapper extends BaseEntityWrapper<User, UserVO> {
 
 	private static IRoleService roleService;
 	private static IDeptService deptService;
+	private static IUserService userService;
 
 	static {
 		roleService = SpringUtil.getBean(IRoleService.class);
 		deptService = SpringUtil.getBean(IDeptService.class);
+		userService = SpringUtil.getBean(IUserService.class);
 	}
 
 	public static UserWrapper build() {
@@ -41,6 +46,12 @@ public class UserWrapper extends BaseEntityWrapper<User, UserVO> {
 		List<String> deptName = deptService.selectDeptByUserId(user.getId()).stream().map(item -> {
 			return item.getDeptName();
 		}).collect(Collectors.toList());
+		if (Func.equals(user.getParentId(), CommonConstant.TOP_PARENT_ID)) {
+			userVO.setParentName(CommonConstant.TOP_PARENT_NAME);
+		} else {
+			User parent = userService.getById(user.getParentId());
+			userVO.setParentName(parent.getName());
+		}
 		userVO.setRoleName(roleName);
 		userVO.setDeptName(deptName);
 		userVO.setSexName(SexEnum.getName(user.getSex()));
