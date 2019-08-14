@@ -32,6 +32,15 @@ public class UserVO extends User {
 	 * 部门名
 	 */
 	private List<String> deptName;
+	/**
+	 * 角色名
+	 */
+	private List<Integer> roles;
+
+	/**
+	 * 部门名
+	 */
+	private List<Integer> depts;
 
 	/**
 	 * 性别

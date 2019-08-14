@@ -56,29 +56,30 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 	@Override
     @Transactional
 	public boolean submit(UserForm form) {
-		if (Func.isNotEmpty(form.getPassword())) {
-            form.setPassword(DigestUtil.encrypt(form.getPassword()));
-		}
-		Integer cnt = baseMapper.selectCount(Wrappers.<User>query().lambda().eq(User::getAccount, form.getAccount()));
-		if (cnt > 0) {
-			throw new ApiException("当前用户已存在!");
-		}
         User user = Func.copy(form, User.class);
-        user.setPassword(DigestUtil.encrypt(CommonConstant.DEFAULT_PASSWORD));
         Boolean userSubmit = true;
-        if(null != user.getId()) {
-            userSubmit = this.updateById(user);
+        if(null == user.getId()) {
+			Integer cnt = baseMapper.selectCount(Wrappers.<User>query().lambda().eq(User::getAccount, form.getAccount()));
+			if (cnt > 0) {
+				throw new ApiException("当前用户已存在!");
+			}
+			user.setPassword(DigestUtil.encrypt(CommonConstant.DEFAULT_PASSWORD));
+			userSubmit = this.save(user);
         } else {
-            userSubmit = this.save(user);
+			userSubmit = this.updateById(user);
         }
         List<Integer> depts = form.getDepts();
         List<Integer> roles = form.getRoles();
-        userDeptService.remove(new QueryWrapper<UserDept>().lambda().eq(UserDept::getUserId, user.getId()));
-        Boolean userDeptSubmit =
-                userDeptService.saveBatch(depts.stream().map(item -> UserDept.builder().deptId(item).userId(user.getId()).build()).collect(Collectors.toList()));
-        userRoleService.remove(new QueryWrapper<UserRole>().lambda().eq(UserRole::getUserId, user.getId()));
-        Boolean userRoleSubmit =
-                userRoleService.saveBatch(roles.stream().map(item -> UserRole.builder().roleId(item).userId(user.getId()).build()).collect(Collectors.toList()));
+		Boolean userDeptSubmit = true;
+		Boolean userRoleSubmit = true;
+        if(Func.isNotEmpty(depts)) {
+			userDeptService.remove(new QueryWrapper<UserDept>().lambda().eq(UserDept::getUserId, user.getId()));
+        	userDeptSubmit = userDeptService.saveBatch(depts.stream().map(item -> UserDept.builder().deptId(item).userId(user.getId()).build()).collect(Collectors.toList()));
+		}
+		if(Func.isNotEmpty(roles)) {
+			userRoleService.remove(new QueryWrapper<UserRole>().lambda().eq(UserRole::getUserId, user.getId()));
+			userRoleSubmit = userRoleService.saveBatch(roles.stream().map(item -> UserRole.builder().roleId(item).userId(user.getId()).build()).collect(Collectors.toList()));
+		}
         return userSubmit && userDeptSubmit && userRoleSubmit;
 	}
 

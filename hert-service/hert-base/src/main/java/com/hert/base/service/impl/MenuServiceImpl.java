@@ -52,7 +52,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
 			}
 		}
-		//先添加当前菜单的子菜单，保证一旦有了父菜单其也一定存在子菜单
+		//先添加当前菜单的子菜单
 		Set<Menu> childrenMenu = selectChildren(type, listMenu);
 		childrenMenu.addAll(listMenu);
 		listMenu.clear();

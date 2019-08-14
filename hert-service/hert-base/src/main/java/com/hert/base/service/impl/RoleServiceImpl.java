@@ -44,7 +44,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 	@Override
 	public List<Role> selectRoleByUserId(Integer userId) {
 		List<Role> roles = Arrays.asList();
-		if(SecureUtil.getAccountType() == AccountTypeEnum.SU_ADMIN.getValue()) {
+		if(SecureUtil.getAccountType() == AccountTypeEnum.SU_ADMIN.getValue() && SecureUtil.getUserId() == userId) {
 			roles = baseMapper.selectList(new QueryWrapper<Role>());
 		} else {
 			roles = baseMapper.selectRoleByUserId(userId);

@@ -49,10 +49,16 @@ public class Menu implements Serializable {
 	private String name;
 
 	/**
-	 * 菜单别名
+	 * 菜单logo
 	 */
-	@ApiModelProperty(value = "菜单别名")
-	private String alias;
+	@ApiModelProperty(value = "菜单logo")
+	private String icon;
+
+	/**
+	 * 是否缓存
+	 */
+	@ApiModelProperty(value = "是否缓存")
+	private Long isCache;
 
 	/**
 	 * 请求地址

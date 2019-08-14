@@ -47,7 +47,7 @@ public class MenuController extends HertController {
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "新增或修改", notes = "传入menuForm")
-	public R submit(@Valid MenuForm form) {
+	public R submit(@Valid @RequestBody MenuForm form) {
 		return R.status(menuService.saveOrUpdate(Func.copy(form, Menu.class)));
 	}
 
