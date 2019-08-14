@@ -64,7 +64,7 @@ public class RoleController extends HertController {
 	/**
 	 * 删除
 	 */
-	@PostMapping("/remove")
+	@GetMapping("/remove")
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {

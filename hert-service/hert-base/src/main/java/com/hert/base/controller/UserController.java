@@ -83,7 +83,7 @@ public class UserController {
 	/**
 	 * 删除
 	 */
-	@PostMapping("/remove")
+	@GetMapping("/remove")
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "删除", notes = "传入id集合")
 	public R remove(@RequestParam String ids) {
@@ -91,7 +91,7 @@ public class UserController {
 	}
 
 
-	@PostMapping("/reset-password")
+	@GetMapping("/reset-password")
 	@ApiOperationSupport(order = 7)
 	@ApiOperation(value = "初始化密码", notes = "传入userId集合")
 	public R resetPassword(@ApiParam(value = "userId集合", required = true) @RequestParam String userIds) {

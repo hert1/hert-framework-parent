@@ -52,7 +52,7 @@ public class MenuController extends HertController {
 	}
 
 
-	@PostMapping("/remove")
+	@GetMapping("/remove")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 3)
 	@ApiOperation(value = "删除", notes = "传入ids")
