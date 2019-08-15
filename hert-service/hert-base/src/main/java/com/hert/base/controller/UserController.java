@@ -3,6 +3,7 @@ package com.hert.base.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.hert.base.api.form.edit.EditForm;
 import com.hert.base.api.form.edit.UserForm;
 import com.hert.base.service.IUserService;
 import com.hert.core.mp.support.Condition;
@@ -13,18 +14,19 @@ import com.hert.core.tool.utils.Func;
 import com.hert.base.api.entity.User;
 import com.hert.base.api.vo.UserVO;
 import com.hert.base.wrapper.UserWrapper;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiOperationSupport;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -38,6 +40,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("user")
 @AllArgsConstructor
+@Api(value = "用户", tags = "用户")
 public class UserController {
 
 	private IUserService userService;
@@ -83,19 +86,19 @@ public class UserController {
 	/**
 	 * 删除
 	 */
-	@GetMapping("/remove")
+	@DeleteMapping("/remove")
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "删除", notes = "传入id集合")
-	public R remove(@RequestParam String ids) {
-		return R.status(userService.deleteLogic(Func.toIntList(ids)));
+	public R remove(@RequestBody EditForm form) {
+		return R.status(userService.deleteLogic(form.getIdList()));
 	}
 
 
-	@GetMapping("/reset-password")
+	@PostMapping("/reset-password")
 	@ApiOperationSupport(order = 7)
 	@ApiOperation(value = "初始化密码", notes = "传入userId集合")
-	public R resetPassword(@ApiParam(value = "userId集合", required = true) @RequestParam String userIds) {
-		boolean temp = userService.resetPassword(userIds);
+	public R resetPassword(@RequestBody EditForm form) {
+		boolean temp = userService.resetPassword(form.getIdList());
 		return R.status(temp);
 	}
 

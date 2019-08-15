@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.hert.base.api.dto.UserDTO;
+import com.hert.base.api.entity.Dept;
 import com.hert.base.api.entity.Menu;
 import com.hert.base.api.entity.Role;
 import com.hert.base.api.entity.User;
@@ -16,6 +17,7 @@ import com.hert.base.api.form.edit.UserForm;
 import com.hert.base.mapper.MenuMapper;
 import com.hert.base.mapper.RoleMapper;
 import com.hert.base.mapper.UserMapper;
+import com.hert.base.service.IDeptService;
 import com.hert.base.service.IMenuService;
 import com.hert.base.service.IRoleService;
 import com.hert.base.service.IUserDeptService;
@@ -49,6 +51,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
 	@Autowired
 	private IMenuService menuService;
+
+	@Autowired
+	private IDeptService deptService;
 
 	@Autowired
     private IUserDeptService userDeptService;
@@ -96,10 +101,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 	}
 
 	@Override
-	public boolean resetPassword(String userIds) {
-		User user = new User();
-		user.setPassword(DigestUtil.encrypt(CommonConstant.DEFAULT_PASSWORD));
-		return this.updateById(user);
+	public boolean resetPassword(List<Integer> userIds) {
+		if(Func.isNotEmpty(userIds)) {
+			String new_password = DigestUtil.encrypt(CommonConstant.DEFAULT_PASSWORD);
+			List<User> userList = userIds.stream().map(item -> {
+				return User.builder().id(item).password(new_password).build();
+			}).collect(Collectors.toList());
+			return this.updateBatchById(userList);
+		}
+		return false;
 	}
 
 	/*

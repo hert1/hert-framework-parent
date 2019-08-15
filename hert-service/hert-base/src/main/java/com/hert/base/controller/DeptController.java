@@ -1,9 +1,9 @@
 package com.hert.base.controller;
 
 import com.hert.base.api.entity.Dept;
+import com.hert.base.api.form.edit.EditForm;
 import com.hert.base.api.form.edit.DeptForm;
 import com.hert.base.service.IDeptService;
-import com.hert.base.api.vo.DeptVO;
 import com.hert.base.wrapper.DeptWrapper;
 import com.hert.core.boot.ctrl.HertController;
 import com.hert.core.secure.LoginUser;
@@ -11,12 +11,10 @@ import com.hert.core.tool.api.R;
 import com.hert.core.tool.node.INode;
 import com.hert.core.tool.utils.Func;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiOperationSupport;
-import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -67,11 +65,11 @@ public class DeptController extends HertController {
 	/**
 	 * 删除
 	 */
-	@GetMapping("/remove")
+	@DeleteMapping("/remove")
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "删除", notes = "传入ids")
-	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
-		return R.status(deptService.removeByIds(Func.toIntList(ids)));
+	public R remove(@Valid @RequestBody EditForm form) {
+		return R.status(deptService.removeByIds(form.getIdList()));
 	}
 
 

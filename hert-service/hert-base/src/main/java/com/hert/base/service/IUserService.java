@@ -18,6 +18,7 @@ package com.hert.base.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hert.base.api.form.edit.UserForm;
+import com.hert.base.api.form.query.UserQuery;
 import com.hert.core.mp.base.BaseService;
 import com.hert.base.api.entity.User;
 import com.hert.base.api.dto.UserDTO;
@@ -62,6 +63,6 @@ public interface IUserService extends BaseService<User> {
 	 * @param userIds
 	 * @return
 	 */
-	boolean resetPassword(String userIds);
+	boolean resetPassword(List<Integer> userIds);
 
 }

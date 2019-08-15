@@ -23,7 +23,7 @@ public interface DeptMapper extends BaseMapper<Dept> {
 	 * @param userId
 	 * @return
 	 */
-	@Select("select d.* from hert_dept d right join hert_user_dept u on d.id = u.dept_id where u.user_id = #{userId}")
+	@Select("select d.* from hert_dept d right join hert_user_dept u on d.id = u.dept_id where u.user_id = #{userId} and is_deleted = 0")
 	List<Dept> selectDeptByUserId(Integer userId);
 
 }

@@ -1,6 +1,7 @@
 package com.hert.base.controller;
 
 import com.hert.base.api.enums.MenuTypeEnum;
+import com.hert.base.api.form.edit.EditForm;
 import com.hert.base.api.form.edit.MenuForm;
 import com.hert.base.service.IMenuService;
 import com.hert.base.wrapper.MenuWrapper;
@@ -9,7 +10,6 @@ import com.hert.core.secure.LoginUser;
 import com.hert.core.secure.annotation.PreAuth;
 import com.hert.core.tool.api.R;
 import com.hert.core.tool.constant.RoleConstant;
-import com.hert.core.tool.support.Kv;
 import com.hert.core.tool.utils.Func;
 import com.hert.base.api.entity.Menu;
 import com.hert.base.api.vo.MenuVO;
@@ -52,12 +52,12 @@ public class MenuController extends HertController {
 	}
 
 
-	@GetMapping("/remove")
+	@DeleteMapping("/remove")
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 3)
 	@ApiOperation(value = "删除", notes = "传入ids")
-	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
-		return R.status(menuService.removeByIds(Func.toIntList(ids)));
+	public R remove(@Valid @RequestBody EditForm form) {
+		return R.status(menuService.removeByIds(form.getIdList()));
 	}
 
 	@GetMapping("/tree")

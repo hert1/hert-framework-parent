@@ -2,8 +2,15 @@ package com.hert.base.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hert.base.api.entity.User;
+import com.hert.base.api.form.query.UserQuery;
+import com.hert.base.api.provider.UserProvider;
+import javafx.scene.control.Pagination;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 
 import java.util.List;
 
@@ -14,6 +21,9 @@ import java.util.List;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
+
+    @SelectProvider(type = UserProvider.class, method = "selectByQuery")
+    List<User> selectUserByQuery(Page page, @Param("query") UserQuery query);
 
 
 }

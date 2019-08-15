@@ -2,8 +2,10 @@ package com.hert.base.api.vo;
 
 import com.hert.base.api.entity.User;
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
