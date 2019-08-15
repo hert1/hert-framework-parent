@@ -1,7 +1,7 @@
 package com.hert.base.controller;
 
 import com.hert.base.api.enums.MenuTypeEnum;
-import com.hert.base.api.form.edit.EditForm;
+import com.hert.base.api.form.edit.DeleteForm;
 import com.hert.base.api.form.edit.MenuForm;
 import com.hert.base.service.IMenuService;
 import com.hert.base.wrapper.MenuWrapper;
@@ -56,7 +56,7 @@ public class MenuController extends HertController {
 	@PreAuth(RoleConstant.HAS_ROLE_ADMIN)
 	@ApiOperationSupport(order = 3)
 	@ApiOperation(value = "删除", notes = "传入ids")
-	public R remove(@Valid @RequestBody EditForm form) {
+	public R remove(@Valid @RequestBody DeleteForm form) {
 		return R.status(menuService.removeByIds(form.getIdList()));
 	}
 

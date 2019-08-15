@@ -3,7 +3,7 @@ package com.hert.base.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.hert.base.api.form.edit.EditForm;
+import com.hert.base.api.form.edit.DeleteForm;
 import com.hert.base.api.form.edit.UserForm;
 import com.hert.base.service.IUserService;
 import com.hert.core.mp.support.Condition;
@@ -19,7 +19,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiOperationSupport;
-import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -89,7 +88,7 @@ public class UserController {
 	@DeleteMapping("/remove")
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "删除", notes = "传入id集合")
-	public R remove(@RequestBody EditForm form) {
+	public R remove(@RequestBody DeleteForm form) {
 		return R.status(userService.deleteLogic(form.getIdList()));
 	}
 
@@ -97,7 +96,7 @@ public class UserController {
 	@PostMapping("/reset-password")
 	@ApiOperationSupport(order = 7)
 	@ApiOperation(value = "初始化密码", notes = "传入userId集合")
-	public R resetPassword(@RequestBody EditForm form) {
+	public R resetPassword(@RequestBody DeleteForm form) {
 		boolean temp = userService.resetPassword(form.getIdList());
 		return R.status(temp);
 	}

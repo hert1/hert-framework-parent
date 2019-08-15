@@ -1,6 +1,6 @@
 package com.hert.base.controller;
 
-import com.hert.base.api.form.edit.EditForm;
+import com.hert.base.api.form.edit.DeleteForm;
 import com.hert.base.api.form.edit.RoleForm;
 import com.hert.base.service.IRoleService;
 import com.hert.base.wrapper.RoleWrapper;
@@ -67,7 +67,7 @@ public class RoleController extends HertController {
 	@DeleteMapping("/remove")
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "删除", notes = "传入ids")
-	public R remove(@Valid @RequestBody EditForm form) {
+	public R remove(@Valid @RequestBody DeleteForm form) {
 		return R.status(roleService.removeByIds(form.getIdList()));
 	}
 

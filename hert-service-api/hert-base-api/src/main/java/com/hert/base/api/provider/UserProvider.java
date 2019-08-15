@@ -1,6 +1,5 @@
 package com.hert.base.api.provider;
 
-import com.hert.base.api.form.query.UserQuery;
 import org.apache.ibatis.annotations.Param;
 
 /**

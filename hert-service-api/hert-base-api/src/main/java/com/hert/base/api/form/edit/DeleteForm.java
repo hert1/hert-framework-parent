@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "EditForm对象", description = "EditForm对象")
-public class EditForm {
+public class DeleteForm {
 
     /**
      * 主键id
