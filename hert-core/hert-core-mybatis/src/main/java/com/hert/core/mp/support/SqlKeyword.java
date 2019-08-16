@@ -5,6 +5,7 @@ import com.hert.core.tool.utils.BeanUtil;
 import com.hert.core.tool.utils.Func;
 import com.hert.core.tool.utils.StringPool;
 import com.hert.core.tool.utils.StringUtil;
+import lombok.Getter;
 
 import java.util.Map;
 
@@ -14,20 +15,20 @@ import java.util.Map;
  * @author hert
  */
 public class SqlKeyword {
-	private final static String SQL_REGEX = "'|%|--|insert|delete|update|select|count|group|union|drop|truncate|alter|grant|execute|exec|xp_cmdshell|call|declare|sql";
+	public final static String SQL_REGEX = "'|%|--|insert|delete|update|select|count|group|union|drop|truncate|alter|grant|execute|exec|xp_cmdshell|call|declare|sql";
 
-	private static final String EQUAL = "_equal";
-	private static final String NOT_EQUAL = "_notequal";
-	private static final String LIKE = "_like";
-	private static final String NOT_LIKE = "_notlike";
-	private static final String GT = "_gt";
-	private static final String LT = "_lt";
-	private static final String DATE_GT = "_dategt";
-	private static final String DATE_EQUAL = "_dateequal";
-	private static final String DATE_LT = "_datelt";
-	private static final String IS_NULL = "_null";
-	private static final String NOT_NULL = "_notnull";
-	private static final String IGNORE = "_ignore";
+	public static final String EQUAL = "_equal";
+	public static final String NOT_EQUAL = "_notequal";
+	public static final String LIKE = "_like";
+	public static final String NOT_LIKE = "_notlike";
+	public static final String GT = "_gt";
+	public static final String LT = "_lt";
+	public static final String DATE_GT = "_dategt";
+	public static final String DATE_EQUAL = "_dateequal";
+	public static final String DATE_LT = "_datelt";
+	public static final String IS_NULL = "_null";
+	public static final String NOT_NULL = "_notnull";
+	public static final String IGNORE = "_ignore";
 
 	/**
 	 * 条件构造器

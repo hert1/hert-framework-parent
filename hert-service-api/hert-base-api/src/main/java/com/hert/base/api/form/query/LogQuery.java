@@ -31,10 +31,12 @@ public class LogQuery {
     /**
      * 服务器IP地址
      */
+    @JsonProperty("serverHost"+ SqlKeyword.EQUAL)
     private String serverIp;
     /**
      * 系统环境
      */
+    @JsonProperty("serverHost"+ SqlKeyword.EQUAL)
     private String env;
 
 }

@@ -49,7 +49,7 @@ public class LogApiController {
 	 * 查询多条(分页)
 	 */
 	@GetMapping("/list")
-	public R<IPage<LogApiVo>> list(@ApiIgnore @RequestBody LogQuery logQuery, Query query) {
+	public R<IPage<LogApiVo>> list( LogQuery logQuery, Query query) {
 		IPage<LogApi> pages = logService.page(Condition.getPage(query.setDescs("create_time")), Condition.getQueryWrapper(logQuery, LogApi.class));
 		List<LogApiVo> records = pages.getRecords().stream().map(logApi -> {
 			LogApiVo vo = BeanUtil.copy(logApi, LogApiVo.class);

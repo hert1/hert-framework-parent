@@ -3,6 +3,7 @@ package com.hert.base.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hert.base.api.form.query.LogQuery;
 import com.hert.base.service.ILogErrorService;
 import com.hert.core.log.model.LogError;
 import com.hert.core.log.model.LogErrorVo;
@@ -47,8 +48,8 @@ public class LogErrorController {
 	 * 查询多条(分页)
 	 */
 	@GetMapping("/list")
-	public R<IPage<LogErrorVo>> list(@ApiIgnore @RequestParam Map<String, Object> logError, Query query) {
-		IPage<LogError> pages = errorLogService.page(Condition.getPage(query.setDescs("create_time")), Condition.getQueryWrapper(logError, LogError.class));
+	public R<IPage<LogErrorVo>> list(LogQuery logQuery, Query query) {
+		IPage<LogError> pages = errorLogService.page(Condition.getPage(query.setDescs("create_time")), Condition.getQueryWrapper(logQuery, LogError.class));
 		List<LogErrorVo> records = pages.getRecords().stream().map(logApi -> {
 			LogErrorVo vo = BeanUtil.copy(logApi, LogErrorVo.class);
 			vo.setStrId(Func.toStr(logApi.getId()));
