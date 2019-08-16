@@ -1,6 +1,7 @@
 package com.hert.core.mp.support;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.hert.core.tool.utils.BeanUtil;
 import com.hert.core.tool.utils.Func;
 import com.hert.core.tool.utils.StringPool;
 import com.hert.core.tool.utils.StringUtil;
@@ -34,36 +35,39 @@ public class SqlKeyword {
 	 * @param query 查询字段
 	 * @param qw    查询包装类
 	 */
-	public static void buildCondition(Map<String, Object> query, QueryWrapper<?> qw) {
+	public static void buildCondition(Object query, QueryWrapper<?> qw) {
 		if (Func.isEmpty(query)) {
 			return;
 		}
-		query.forEach((k, v) -> {
+		Map<String, Object> queryMap = BeanUtil.toMap(query);
+		queryMap.remove("current");
+		queryMap.remove("size");
+        queryMap.forEach((k, v) -> {
 			if (Func.hasEmpty(k, v) || k.endsWith(IGNORE)) {
 				return;
 			}
 			if (k.endsWith(EQUAL)) {
-				qw.eq(getColumn(k, EQUAL), v);
+				qw.eq(Func.isNotEmpty(v), getColumn(k, EQUAL), v);
 			} else if (k.endsWith(NOT_EQUAL)) {
-				qw.ne(getColumn(k, NOT_EQUAL), v);
+				qw.ne(Func.isNotEmpty(v), getColumn(k, NOT_EQUAL), v);
 			} else if (k.endsWith(NOT_LIKE)) {
-				qw.notLike(getColumn(k, NOT_LIKE), v);
+				qw.notLike(Func.isNotEmpty(v), getColumn(k, NOT_LIKE), v);
 			} else if (k.endsWith(GT)) {
-				qw.gt(getColumn(k, GT), v);
+				qw.gt(Func.isNotEmpty(v), getColumn(k, GT), v);
 			} else if (k.endsWith(LT)) {
-				qw.lt(getColumn(k, LT), v);
+				qw.lt(Func.isNotEmpty(v), getColumn(k, LT), v);
 			} else if (k.endsWith(DATE_GT)) {
-				qw.gt(getColumn(k, DATE_GT), v);
+				qw.gt(Func.isNotEmpty(v), getColumn(k, DATE_GT), v);
 			} else if (k.endsWith(DATE_EQUAL)) {
-				qw.eq(getColumn(k, DATE_EQUAL), v);
+				qw.eq(Func.isNotEmpty(v), getColumn(k, DATE_EQUAL), v);
 			} else if (k.endsWith(DATE_LT)) {
-				qw.lt(getColumn(k, DATE_LT), v);
+				qw.lt(Func.isNotEmpty(v), getColumn(k, DATE_LT), v);
 			} else if (k.endsWith(IS_NULL)) {
-				qw.isNull(getColumn(k, IS_NULL));
+				qw.isNull(Func.isNotEmpty(v), getColumn(k, IS_NULL));
 			} else if (k.endsWith(NOT_NULL)) {
-				qw.isNotNull(getColumn(k, NOT_NULL));
+				qw.isNotNull(Func.isNotEmpty(v), getColumn(k, NOT_NULL));
 			} else {
-				qw.like(getColumn(k, LIKE), v);
+				qw.like(Func.isNotEmpty(v), getColumn(k, LIKE), v);
 			}
 		});
 	}

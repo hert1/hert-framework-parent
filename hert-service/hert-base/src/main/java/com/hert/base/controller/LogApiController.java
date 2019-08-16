@@ -3,6 +3,7 @@ package com.hert.base.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hert.base.api.form.query.LogQuery;
 import com.hert.base.service.ILogApiService;
 import com.hert.core.log.model.LogApi;
 import com.hert.core.log.model.LogApiVo;
@@ -13,6 +14,7 @@ import com.hert.core.tool.utils.BeanUtil;
 import com.hert.core.tool.utils.Func;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,8 +49,8 @@ public class LogApiController {
 	 * 查询多条(分页)
 	 */
 	@GetMapping("/list")
-	public R<IPage<LogApiVo>> list(@ApiIgnore @RequestParam Map<String, Object> log, Query query) {
-		IPage<LogApi> pages = logService.page(Condition.getPage(query.setDescs("create_time")), Condition.getQueryWrapper(log, LogApi.class));
+	public R<IPage<LogApiVo>> list(@ApiIgnore @RequestBody LogQuery logQuery, Query query) {
+		IPage<LogApi> pages = logService.page(Condition.getPage(query.setDescs("create_time")), Condition.getQueryWrapper(logQuery, LogApi.class));
 		List<LogApiVo> records = pages.getRecords().stream().map(logApi -> {
 			LogApiVo vo = BeanUtil.copy(logApi, LogApiVo.class);
 			vo.setStrId(Func.toStr(logApi.getId()));
