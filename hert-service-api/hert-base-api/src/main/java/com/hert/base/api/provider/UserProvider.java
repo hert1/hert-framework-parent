@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
  */
 public class UserProvider {
 
-    public String selectByQuery(@Param("query") UserQuery query) {
+    public String selectByQuery() {
         String sql = "select u.* from hert_user u where u.id = #{query.id} and u.is_deleted = 0";
         return sql;
     }

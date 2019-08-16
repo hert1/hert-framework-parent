@@ -19,7 +19,7 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
 
     @SelectProvider(type = UserProvider.class, method = "selectByQuery")
-    List<User> selectUserByQuery(Page page, @Param("query") UserQuery query);
+    List<User> selectUserByQuery();
 
 
 }
