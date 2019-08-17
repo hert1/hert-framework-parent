@@ -3,6 +3,7 @@ package com.hert.base.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hert.base.api.form.query.LogQuery;
 import com.hert.base.service.ILogUsualService;
 import com.hert.core.log.model.LogUsual;
 import com.hert.core.log.model.LogUsualVo;
@@ -47,8 +48,8 @@ public class LogUsualController {
 	 * 查询多条(分页)
 	 */
 	@GetMapping("/list")
-	public R<IPage<LogUsualVo>> list(@ApiIgnore @RequestParam Map<String, Object> log, Query query) {
-		IPage<LogUsual> pages = logService.page(Condition.getPage(query), Condition.getQueryWrapper(log, LogUsual.class));
+	public R<IPage<LogUsualVo>> list(LogQuery logQuery, Query query) {
+		IPage<LogUsual> pages = logService.page(Condition.getPage(query), Condition.getQueryWrapper(logQuery, LogUsual.class));
 		List<LogUsualVo> records = pages.getRecords().stream().map(logApi -> {
 			LogUsualVo vo = BeanUtil.copy(logApi, LogUsualVo.class);
 			vo.setStrId(Func.toStr(logApi.getId()));

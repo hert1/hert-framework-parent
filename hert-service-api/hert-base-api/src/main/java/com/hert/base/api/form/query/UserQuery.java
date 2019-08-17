@@ -1,15 +1,9 @@
 package com.hert.base.api.form.query;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.hert.core.mp.support.SqlKeyword;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author hert
@@ -20,20 +14,25 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "LogQuery对象", description = "LogQuery对象")
-public class LogQuery {
+public class UserQuery {
 
 
     /**
-     * 服务器名
+     * id
      */
-    private String serverHost_equal;
+    private Integer id;
+
     /**
-     * 服务器IP地址
+     * 账号
      */
-    private String serverIp_equal;
+    private String account_equal;
     /**
-     * 系统环境
+     * 名字
      */
-    private String env_equal;
+    private String name_like;
+    /**
+     * 电话
+     */
+    private String phone_like;
 
 }

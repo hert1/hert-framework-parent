@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.hert.base.api.form.edit.DeleteForm;
 import com.hert.base.api.form.edit.UserForm;
+import com.hert.base.api.form.query.UserQuery;
 import com.hert.base.service.IUserService;
+import com.hert.core.log.model.LogError;
 import com.hert.core.mp.support.Condition;
 import com.hert.core.mp.support.Query;
 import com.hert.core.secure.LoginUser;
@@ -67,8 +69,8 @@ public class UserController {
 	})
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "列表", notes = "账号id")
-	public R<IPage<UserVO>> list(@ApiIgnore @RequestParam(required = false) Integer id, Query query, LoginUser loginUser) {
-		IPage<User> pages = userService.page(Condition.getPage(query), new QueryWrapper<User>().eq("parent_id", Func.toInt(id, loginUser.getUserId())));
+	public R<IPage<UserVO>> list(UserQuery userQuery, Query query, LoginUser loginUser) {
+		IPage<User> pages = userService.page(Condition.getPage(query), Condition.getQueryWrapper(userQuery, User.class).eq("parent_id", Func.toInt(userQuery.getId(), loginUser.getUserId())));
 		return R.data(UserWrapper.build().pageVO(pages));
 	}
 
