@@ -6,7 +6,21 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true
+          enabled: false
+      routes:
+        # Add your routes here.
+        - id: hert-auth #定义全局id
+          uri: lb://hert-auth #转发目的地
+          predicates:
+            - Path=/hert-auth/** #将url以hert-auth开头的转发
+          filters:
+            - StripPrefix= 1 #截取转发前缀
+        - id: hert-base #定义全局id
+          uri: lb://hert-base #转发目的地
+          predicates:
+            - Path=/hert-base/** #将url以hert-base开头的转发
+            filters:
+             - StripPrefix= 1 #截取转发前缀
     loadbalancer:
       retry:
         enabled: true

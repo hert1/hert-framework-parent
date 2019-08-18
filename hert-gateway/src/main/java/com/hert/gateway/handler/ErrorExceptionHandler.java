@@ -15,6 +15,9 @@
  */
 package com.hert.gateway.handler;
 
+import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
+import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowException;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.DefaultErrorWebExceptionHandler;
@@ -52,6 +55,12 @@ public class ErrorExceptionHandler extends DefaultErrorWebExceptionHandler {
 		}
 		if (error instanceof ResponseStatusException) {
 			code = ((ResponseStatusException) error).getStatus().value();
+		}
+		if (error instanceof BlockException) {
+			code = 500;
+			StringBuffer message = new StringBuffer();
+			message.append("服务器快太热了，急求空调！！！");
+			return response(code, message.toString());
 		}
 		return response(code, this.buildMessage(request, error));
 	}
