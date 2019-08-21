@@ -69,7 +69,7 @@
         <dependency>
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-spring-cloud-gateway-adapter</artifactId>
-            <version>${sentinel.version}</version>
+            <version>${gateway.sentinel.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
