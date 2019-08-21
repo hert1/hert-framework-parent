@@ -1,6 +1,7 @@
 package com.hert.common.launch;
 
 import com.hert.common.constant.CommonConstant;
+import com.hert.core.launch.constant.SentinelConstant;
 import com.hert.core.launch.service.LauncherService;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
@@ -9,7 +10,7 @@ import java.util.Properties;
 /**
  * 启动参数拓展
  *
- * @author smallchil
+ * @author hert
  */
 public class LauncherServiceImpl implements LauncherService {
 

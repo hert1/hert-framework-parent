@@ -28,27 +28,18 @@ public interface CommonConstant {
 	/**
 	 * sentinel dev 地址
 	 */
-	String SENTINEL_DEV_ADDR = "127.0.0.1:8858";
+	String SENTINEL_DEV_ADDR = "47.101.172.209:8858";
 
 	/**
 	 * sentinel prod 地址
 	 */
-	String SENTINEL_PROD_ADDR = "172.30.0.58:8858";
+	String SENTINEL_PROD_ADDR = "47.101.172.209:8858";
 
 	/**
 	 * sentinel test 地址
 	 */
-	String SENTINEL_TEST_ADDR = "172.30.0.58:8858";
+	String SENTINEL_TEST_ADDR = "47.101.172.209:8858";
 
-	/**
-	 * sword 系统名
-	 */
-	String SWORD_NAME = "sword";
-
-	/**
-	 * saber 系统名
-	 */
-	String SABER_NAME = "saber";
 
 	/**
 	 * 顶级父节点id

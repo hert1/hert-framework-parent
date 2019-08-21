@@ -1,15 +1,9 @@
 package com.hert.base.api.form.query;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.hert.core.mp.support.SqlKeyword;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author hert

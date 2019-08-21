@@ -19,8 +19,8 @@ spring:
           uri: lb://hert-base #转发目的地
           predicates:
             - Path=/hert-base/** #将url以hert-base开头的转发
-            filters:
-             - StripPrefix= 1 #截取转发前缀
+          filters:
+            - StripPrefix= 1 #截取转发前缀
     loadbalancer:
       retry:
         enabled: true
