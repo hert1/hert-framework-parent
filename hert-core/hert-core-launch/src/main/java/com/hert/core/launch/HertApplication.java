@@ -85,10 +85,6 @@ public class HertApplication {
 		props.setProperty("spring.cloud.nacos.config.prefix", NacosConstant.NACOS_CONFIG_PREFIX);
 		props.setProperty("spring.cloud.nacos.config.file-extension", NacosConstant.NACOS_CONFIG_FORMAT);
 		props.setProperty("spring.cloud.sentinel.transport.dashboard", SentinelConstant.SENTINEL_ADDR);
-		props.setProperty("spring.cloud.sentinel.datasource.ds.nacos.server-addr",  NacosConstant.NACOS_ADDR);
-		props.setProperty("spring.cloud.sentinel.datasource.ds.nacos.dataId", appName+"-sentinel");
-		props.setProperty("spring.cloud.sentinel.datasource.ds.nacos.groupId", "DEFAULT_GROUP");
-		props.setProperty("spring.cloud.sentinel.datasource.ds.nacos.rule-type", "flow");
 		// 加载自定义组件
 		List<LauncherService> launcherList = new ArrayList<>();
 		ServiceLoader.load(LauncherService.class).forEach(launcherList::add);

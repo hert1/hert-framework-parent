@@ -74,16 +74,6 @@
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
             <version>${alibaba.cloud.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-datasource-nacos</artifactId>
-            <version>${sentinel.datasource.nacos}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-spring-context</artifactId>
-            <version>0.3.3</version>
-        </dependency>
     </dependencies>
 
 </project>

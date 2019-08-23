@@ -11,13 +11,6 @@ import com.hert.core.launch.constant.AppConstant;
 public interface CommonConstant {
 
 
-	// 分组
-	String NACOS_BASE_GROUP = "BASE_CONFIG";
-	String NACOS_SENTINEL_FLOW_GROUP = "SENTINEL_FLOW_GROUP";
-	String NACOS_DEFAULT_GROUP = "DEFAULT_CONFIG";
-
-	// 流控规则空间
-	String SENTINEL_ROLE = "7616d86e-3660-4673-9a05-6caf42060307";
 	/**
 	 * nacos dev 地址
 	 */
