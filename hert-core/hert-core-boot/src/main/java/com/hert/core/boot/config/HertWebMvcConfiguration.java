@@ -17,7 +17,6 @@ import java.util.List;
  */
 @Slf4j
 @Configuration
-@EnableCaching
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class HertWebMvcConfiguration implements WebMvcConfigurer {
 

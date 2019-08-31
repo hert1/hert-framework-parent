@@ -43,13 +43,34 @@ public class AuthController {
 
 	@PostMapping("checkLogin")
 	@ApiOperation(value = "检查登录", notes = "")
-	public R<Object> checkLogin(@Valid @RequestBody LoginForm form) {
-		Object authInfo = null;
+	public R<AuthInfo> checkLogin(@Valid @RequestBody LoginForm form) {
+		AuthInfo authInfo = null;
 		if (Func.equals(form.getGrantType(), TokenConstant.CHECK_LOGIN)) {
-			authInfo = redisTemplate.opsForValue().get(form.getCode());
+			authInfo = (AuthInfo) redisTemplate.opsForValue().get(form.getCode());
 		}
 		if (Func.isEmpty(authInfo)) {
 			return R.fail(ResultCode.RE_LOGIN);
+		}
+
+		return R.data(authInfo);
+	}
+
+	@PostMapping("refreshToken")
+	@ApiOperation(value = "刷新token", notes = "")
+	public R<AuthInfo> refreshToken(@Valid @RequestBody LoginForm form) {
+		AuthInfo authInfo = null;
+		TokenParameter tokenParameter = new TokenParameter();
+		if (Func.equals(form.getGrantType(), TokenConstant.REFRESH_TOKEN)) {
+			tokenParameter.getArgs().set("grantType", form.getGrantType()).set("refreshToken", form.getRefreshToken());
+			ITokenGranter granter = TokenGranterBuilder.getGranter(form.getGrantType());
+			UserDTO userDto = granter.grant(tokenParameter);
+			if (userDto == null || userDto.getUser() == null || userDto.getUser().getId() == null) {
+				return R.fail(TokenUtil.USER_NOT_FOUND);
+			}
+			if (userDto.getUser().getStatus() == 0) {
+				return R.fail(TokenUtil.USER_STOP_USE);
+			}
+			authInfo = TokenUtil.createAuthInfo(userDto);
 		}
 		return R.data(authInfo);
 	}
@@ -80,6 +101,8 @@ public class AuthController {
 			return R.fail(TokenUtil.USER_STOP_USE);
 		}
 		AuthInfo authInfo = TokenUtil.createAuthInfo(userDto);
+		String refreshToken = TokenUtil.createRefreshToken(userDto);
+		authInfo.setRefreshToken(refreshToken);
 		String code = Func.random(6, RandomType.STRING);
 		redisTemplate.opsForValue().set(code, authInfo, 30*60*1000);
 		return R.data(code);

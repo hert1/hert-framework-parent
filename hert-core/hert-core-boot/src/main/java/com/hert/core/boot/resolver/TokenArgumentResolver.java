@@ -25,6 +25,7 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
 	 */
 	@Override
 	public boolean supportsParameter(MethodParameter methodParameter) {
+		System.out.println("---------------------");
 		return methodParameter.getParameterType().equals(LoginUser.class);
 	}
 
@@ -42,6 +43,7 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
 								  ModelAndViewContainer modelAndViewContainer,
 								  NativeWebRequest nativeWebRequest,
 								  WebDataBinderFactory webDataBinderFactory) {
+		System.out.println("***************************");
 		return SecureUtil.getUser();
 	}
 
