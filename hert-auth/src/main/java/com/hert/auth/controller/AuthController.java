@@ -7,14 +7,19 @@ import com.hert.auth.granter.TokenParameter;
 import com.hert.auth.utils.TokenUtil;
 import com.hert.base.api.dto.UserDTO;
 import com.hert.core.secure.AuthInfo;
+import com.hert.core.secure.constant.TokenConstant;
 import com.hert.core.secure.utils.SecureUtil;
 import com.hert.core.tool.api.R;
 import com.hert.core.tool.utils.Func;
+import com.hert.core.tool.utils.RandomType;
 import com.hert.core.tool.utils.WebUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,17 +34,23 @@ import javax.validation.Valid;
  */
 @RestController
 @AllArgsConstructor
-@Api(value = "用户授权认证", tags = "授权接口") 
+@Api(value = "用户授权认证", tags = "授权接口")
 public class AuthController {
+
+	@Autowired
+	private RedisTemplate redisTemplate;
 
 	@PostMapping("checkLogin")
 	@ApiOperation(value = "检查登录", notes = "")
-	public R<AuthInfo> token(@Valid @RequestBody LoginForm form) {
-		TokenParameter tokenParameter = new TokenParameter();
-		tokenParameter.getArgs().set("grantType", form.getGrantType()).set("refreshToken", SecureUtil.getHeader());
-		ITokenGranter granter = TokenGranterBuilder.getGranter(form.getGrantType());
-		UserDTO userDto = granter.grant(tokenParameter);
-		return R.data(TokenUtil.createAuthInfo(userDto));
+	public R<Object> checkLogin(@Valid @RequestBody LoginForm form) {
+		Object authInfo = null;
+		if (Func.equals(form.getGrantType(), TokenConstant.CHECK_LOGIN)) {
+			authInfo = redisTemplate.opsForValue().get(form.getCode());
+		}
+		if (Func.isEmpty(authInfo)) {
+			return R.fail(401, TokenUtil.USER_STOP_USE);
+		}
+		return R.data(authInfo);
 	}
 
 	@PostMapping("logout")
@@ -67,7 +78,10 @@ public class AuthController {
 		if (userDto.getUser().getStatus() == 0) {
 			return R.fail(TokenUtil.USER_STOP_USE);
 		}
-		return R.data(TokenUtil.createToken(userDto));
+		AuthInfo authInfo = TokenUtil.createAuthInfo(userDto);
+		String code = Func.random(6, RandomType.STRING);
+		redisTemplate.opsForValue().set(code, authInfo, 30*60*1000);
+		return R.data(code);
 	}
 
 }

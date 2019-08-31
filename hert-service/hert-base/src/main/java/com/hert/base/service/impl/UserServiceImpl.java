@@ -24,6 +24,7 @@ import com.hert.base.service.IUserDeptService;
 import com.hert.base.service.IUserRoleService;
 import com.hert.base.service.IUserService;
 import com.hert.common.constant.CommonConstant;
+import com.hert.core.log.exception.ServiceException;
 import com.hert.core.mp.base.BaseServiceImpl;
 import com.hert.core.tool.utils.DigestUtil;
 import com.hert.core.tool.utils.Func;

@@ -65,6 +65,10 @@ public class UserForm {
      */
     private Integer sex;
     /**
+     * 状态
+     */
+    private Integer status;
+    /**
      * 账号类型
      */
     private Integer accountType;

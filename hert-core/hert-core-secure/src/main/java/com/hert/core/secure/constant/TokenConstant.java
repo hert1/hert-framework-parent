@@ -12,6 +12,7 @@ public interface TokenConstant {
 	String HEADER = "hert-auth";
 	String BEARER = "bearer";
 	String ACCESS_TOKEN = "access_token";
+	String CHECK_LOGIN = "check_login";
 	String REFRESH_TOKEN = "refresh_token";
 	String TOKEN_TYPE = "token_type";
 	String EXPIRES_IN = "expires_in";
@@ -23,7 +24,6 @@ public interface TokenConstant {
 	String USER_NAME = "user_name";
 	String ROLE_NAME = "role_name";
 	String DEPT_NAME = "dept_name";
-	String TENANT_CODE = "tenant_code";
 	String CLIENT_ID = "client_id";
 	String LICENSE = "license";
 	String PERMISSIONS = "permissions";

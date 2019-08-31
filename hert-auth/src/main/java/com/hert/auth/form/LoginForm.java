@@ -27,6 +27,12 @@ public class LoginForm {
     private String grantType = "password";
 
     /**
+     * code
+     */
+    @ApiModelProperty(value = "code")
+    private String code;
+
+    /**
      * 刷新令牌
      */
     @ApiModelProperty(value = "刷新令牌")

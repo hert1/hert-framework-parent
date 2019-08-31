@@ -18,6 +18,7 @@ public class RegistryConfiguration implements WebMvcConfigurer {
 	public SecureRegistry secureRegistry() {
 		SecureRegistry secureRegistry = new SecureRegistry();
 		secureRegistry.excludePathPatterns("/login/**");
+		secureRegistry.excludePathPatterns("/checkLogin/**");
 		secureRegistry.excludePathPatterns("/logout/**");
 		return secureRegistry;
 	}

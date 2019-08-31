@@ -1,5 +1,6 @@
 package com.hert.core.boot.config;
 
+import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import com.hert.core.boot.redis.RedisKeySerializer;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -36,7 +37,7 @@ public class RedisTemplateConfiguration {
 	@Bean
 	@ConditionalOnMissingBean(RedisSerializer.class)
 	public RedisSerializer<Object> redisSerializer() {
-		return new JdkSerializationRedisSerializer();
+		return new FastJsonRedisSerializer(Object.class);
 	}
 
 	@Bean(name = "redisTemplate")
