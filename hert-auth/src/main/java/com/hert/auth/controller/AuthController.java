@@ -10,6 +10,7 @@ import com.hert.core.secure.AuthInfo;
 import com.hert.core.secure.constant.TokenConstant;
 import com.hert.core.secure.utils.SecureUtil;
 import com.hert.core.tool.api.R;
+import com.hert.core.tool.api.ResultCode;
 import com.hert.core.tool.utils.Func;
 import com.hert.core.tool.utils.RandomType;
 import com.hert.core.tool.utils.WebUtil;
@@ -48,7 +49,7 @@ public class AuthController {
 			authInfo = redisTemplate.opsForValue().get(form.getCode());
 		}
 		if (Func.isEmpty(authInfo)) {
-			return R.fail(401, TokenUtil.USER_STOP_USE);
+			return R.fail(ResultCode.RE_LOGIN);
 		}
 		return R.data(authInfo);
 	}

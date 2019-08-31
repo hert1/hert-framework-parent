@@ -28,6 +28,14 @@ public enum ResultCode implements IResultCode {
 	 * 请求未授权
 	 */
 	UN_AUTHORIZED(HttpServletResponse.SC_UNAUTHORIZED, "请求未授权"),
+	/**
+	 * 请求再次授权
+	 */
+	RE_AUTHORIZED(4001, "请求再次授权"),
+	/**
+	 * 重新登陆
+	 */
+	RE_LOGIN(4002, "重新登陆"),
 
 	/**
 	 * 404 没找到请求
