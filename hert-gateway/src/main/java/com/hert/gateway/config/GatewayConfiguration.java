@@ -53,7 +53,7 @@ public class GatewayConfiguration {
     }
 
     private void initGatewayRules() {
-        Set<GatewayFlowRule> rules = new HashSet<>();
+      /*  Set<GatewayFlowRule> rules = new HashSet<>();
         rules.add(new GatewayFlowRule("hert-auth")
                 .setCount(1)
                 .setIntervalSec(10)
@@ -62,6 +62,6 @@ public class GatewayConfiguration {
                 .setCount(10)
                 .setIntervalSec(1)
         );
-        GatewayRuleManager.loadRules(rules);
+        GatewayRuleManager.loadRules(rules);*/
     }
 }

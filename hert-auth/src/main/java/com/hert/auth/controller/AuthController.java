@@ -29,7 +29,7 @@ import javax.validation.Valid;
  */
 @RestController
 @AllArgsConstructor
-@Api(value = "用户授权认证", tags = "授权接口")
+@Api(value = "用户授权认证", tags = "授权接口") 
 public class AuthController {
 
 	@PostMapping("checkLogin")
@@ -64,7 +64,9 @@ public class AuthController {
 		if (userDto == null || userDto.getUser() == null || userDto.getUser().getId() == null) {
 			return R.fail(TokenUtil.USER_NOT_FOUND);
 		}
-
+		if (userDto.getUser().getStatus() == 0) {
+			return R.fail(TokenUtil.USER_STOP_USE);
+		}
 		return R.data(TokenUtil.createToken(userDto));
 	}
 

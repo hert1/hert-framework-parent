@@ -14,7 +14,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringCloudApplication
 @EnableFeignClients(AppConstant.BASE_PACKAGES)
 public class AuthApplication {
-
 	public static void main(String[] args) {
 		HertApplication.run(AppConstant.APPLICATION_AUTH_NAME, AuthApplication.class, args);
 	}
