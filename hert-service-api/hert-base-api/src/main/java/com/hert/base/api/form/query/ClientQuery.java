@@ -13,26 +13,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(value = "UserQuery对象", description = "UserQuery对象")
-public class UserQuery {
+@ApiModel(value = "ClientQuery对象", description = "ClientQuery对象")
+public class ClientQuery {
 
 
     /**
-     * id
+     * 客户端id
      */
-    private Integer id;
-
+    private String clientId_equal;
     /**
-     * 账号
+     * 客户端密钥
      */
-    private String account_equal;
-    /**
-     * 名字
-     */
-    private String name_like;
-    /**
-     * 电话
-     */
-    private String phone_like;
+    private String clientSecret_like;
 
 }
