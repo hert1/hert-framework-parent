@@ -1,4 +1,4 @@
-package com.hert.core.log.error;
+package com.hert.core.boot.error;
 
 import com.hert.core.log.publisher.ErrorLogPublisher;
 import com.hert.core.tool.api.R;

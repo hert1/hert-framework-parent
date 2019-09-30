@@ -1,4 +1,4 @@
-package com.hert.core.log.error;
+package com.hert.core.boot.error;
 
 import com.hert.core.tool.jackson.JsonUtil;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;

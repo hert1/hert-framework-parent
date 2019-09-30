@@ -1,6 +1,6 @@
-package com.hert.core.log.error;
+package com.hert.core.boot.error;
 
-import com.hert.core.log.exception.ServiceException;
+import com.hert.core.boot.exception.ServiceException;
 import com.hert.core.log.publisher.ErrorLogPublisher;
 import com.hert.core.secure.exception.SecureException;
 import com.hert.core.tool.api.R;

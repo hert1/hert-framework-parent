@@ -1,0 +1,33 @@
+<assembly>
+    <id>assembly</id>
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>conf</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/logs</directory>
+            <outputDirectory>logs</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/assembly/lib</directory>
+            <outputDirectory>lib</outputDirectory>
+        </fileSet>
+    </fileSets>
+    <dependencySets>
+        <dependencySet>
+            <!--<useProjectArtifact>false</useProjectArtifact>-->
+            <outputDirectory>lib</outputDirectory>
+            <!--<unpack>false</unpack>-->
+            <!-- 将scope为runtime的依赖包打包到lib目录下。 -->
+            <!--<scope>runtime</scope>-->
+        </dependencySet>
+    </dependencySets>
+</assembly>

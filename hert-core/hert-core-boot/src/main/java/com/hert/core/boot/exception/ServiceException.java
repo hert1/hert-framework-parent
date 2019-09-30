@@ -1,4 +1,4 @@
-package com.hert.core.log.exception;
+package com.hert.core.boot.exception;
 
 import com.hert.core.tool.api.IResultCode;
 import com.hert.core.tool.api.ResultCode;

@@ -3,14 +3,9 @@ package com.hert.core.boot.config;
 import com.alibaba.csp.sentinel.adapter.servlet.callback.UrlBlockHandler;
 import com.alibaba.csp.sentinel.adapter.servlet.callback.WebCallbackManager;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.hert.core.log.publisher.ErrorLogPublisher;
-import com.hert.core.tool.api.R;
-import com.hert.core.tool.api.ResultCode;
-import com.hert.core.tool.utils.Func;
-import com.hert.core.tool.utils.UrlUtil;
-import com.hert.core.tool.utils.WebUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +20,7 @@ import java.io.IOException;
  */
 @Component
 @Slf4j
-@Order(1)
+@Order(Ordered.LOWEST_PRECEDENCE)
 public class SentinelGlobalHandle implements CommandLineRunner {
 
     @Override

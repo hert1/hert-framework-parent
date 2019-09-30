@@ -1,8 +1,8 @@
-package com.hert.core.log.config;
+package com.hert.core.boot.config;
 
 
-import com.hert.core.log.error.HertErrorAttributes;
-import com.hert.core.log.error.HertErrorController;
+import com.hert.core.boot.error.HertErrorAttributes;
+import com.hert.core.boot.error.HertErrorController;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
