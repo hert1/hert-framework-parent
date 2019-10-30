@@ -1,6 +1,6 @@
-package com.hert.core.launch.config;
+package com.hert.core.boot.config;
 
-import com.hert.core.launch.props.HertProperties;
+import com.hert.core.tool.props.HertProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

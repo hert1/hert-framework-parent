@@ -1,4 +1,4 @@
-package com.hert.core.launch.constant;
+package com.hert.core.boot.constant;
 
 /**
  * Consul常量.

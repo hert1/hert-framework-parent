@@ -1,4 +1,4 @@
-package com.hert.core.launch.service;
+package com.hert.core.boot.service;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.core.Ordered;
