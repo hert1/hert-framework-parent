@@ -1,4 +1,4 @@
-package com.hert.core.launch.constant;
+package com.hert.core.tool.constant;
 
 /**
  * 系统常量

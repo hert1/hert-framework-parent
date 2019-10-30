@@ -15,11 +15,20 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- Hert -->
         <dependency>
-            <groupId>com.hert</groupId>
-            <artifactId>hert-core-launch</artifactId>
-            <version>${hert.tool.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>

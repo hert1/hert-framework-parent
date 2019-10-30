@@ -1,4 +1,4 @@
-package com.hert.core.launch.props;
+package com.hert.core.tool.props;
 
 import lombok.Getter;
 import lombok.Setter;

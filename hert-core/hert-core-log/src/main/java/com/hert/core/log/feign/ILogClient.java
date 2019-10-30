@@ -3,14 +3,13 @@ package com.hert.core.log.feign;
 import com.hert.core.log.model.LogApi;
 import com.hert.core.log.model.LogError;
 import com.hert.core.log.model.LogUsual;
-import com.hert.core.launch.constant.AppConstant;
 import com.hert.core.tool.api.R;
+import com.hert.core.tool.constant.AppConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
- * Feign接口类
  *
  * @author Chill
  */

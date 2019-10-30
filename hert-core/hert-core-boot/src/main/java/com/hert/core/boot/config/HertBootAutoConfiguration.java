@@ -1,6 +1,6 @@
 package com.hert.core.boot.config;
 
-import com.hert.core.launch.props.HertProperties;
+import com.hert.core.tool.props.HertProperties;
 import com.hert.core.tool.constant.SystemConstant;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

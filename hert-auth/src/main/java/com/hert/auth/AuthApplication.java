@@ -2,7 +2,7 @@ package com.hert.auth;
 
 
 import com.hert.core.launch.HertApplication;
-import com.hert.core.launch.constant.AppConstant;
+import com.hert.core.tool.constant.AppConstant;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 

@@ -1,8 +1,7 @@
 package com.hert.base;
 
 import com.hert.core.launch.HertApplication;
-import com.hert.core.launch.constant.AppConstant;
-import org.mybatis.spring.annotation.MapperScan;
+import com.hert.core.tool.constant.AppConstant;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 

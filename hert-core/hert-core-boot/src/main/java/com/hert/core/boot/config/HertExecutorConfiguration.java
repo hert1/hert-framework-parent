@@ -1,6 +1,6 @@
 package com.hert.core.boot.config;
 
-import com.hert.core.boot.props.HertAsyncProperties;
+import com.hert.core.tool.props.HertAsyncProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;

@@ -2,8 +2,8 @@ package com.hert.base.api.feign;
 
 
 import com.hert.base.api.dto.UserDTO;
-import com.hert.core.launch.constant.AppConstant;
 import com.hert.core.tool.api.R;
+import com.hert.core.tool.constant.AppConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

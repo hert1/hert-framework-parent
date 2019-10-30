@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>hert-core-boot</module>
-        <module>hert-core-launch</module>
         <module>hert-core-log</module>
         <module>hert-core-mybatis</module>
         <module>hert-core-tool</module>
