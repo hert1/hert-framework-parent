@@ -1,6 +1,6 @@
 package com.hert.gateway.props;
 
-import com.hert.core.launch.constant.AppConstant;
+import com.hert.core.tool.constant.AppConstant;
 import lombok.Data;
 
 /**

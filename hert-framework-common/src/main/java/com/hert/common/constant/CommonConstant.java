@@ -1,7 +1,7 @@
 package com.hert.common.constant;
 
 
-import com.hert.core.launch.constant.AppConstant;
+import com.hert.core.tool.constant.AppConstant;
 
 /**
  * 通用常量

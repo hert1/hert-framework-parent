@@ -33,7 +33,7 @@ hert-framework-core: 系统核心配置
     hert-framework-core-mybatis: 自定义关于mybatis以及和数据库相关的配置
     hert-framework-core-secure: 安全模块
     hert-framework-core-swagger: api 接口文档
-    hert-framework-core-tool: 自己封装的工具
+    hert-framework-core-tool: 自己封装的工具以及系统常量
 hert-framework-auth: 有关授权登录相关
 
 hert-framework-common: 系统中公共配置

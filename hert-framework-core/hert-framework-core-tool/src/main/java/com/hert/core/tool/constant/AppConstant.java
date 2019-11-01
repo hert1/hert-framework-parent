@@ -26,6 +26,10 @@ public interface AppConstant {
 	 */
 	String APPLICATION_GATEWAY_NAME = APPLICATION_NAME_PREFIX + "gateway";
 	/**
+	 * springboot admin
+	 */
+	String APPLICATION_ADMIN_NAME = APPLICATION_NAME_PREFIX + "admin";
+	/**
 	 * 授权模块名称
 	 */
 	String APPLICATION_AUTH_NAME = APPLICATION_NAME_PREFIX + "auth";

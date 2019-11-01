@@ -1,7 +1,7 @@
 package com.hert.common.launch;
 
 import com.hert.common.constant.CommonConstant;
-import com.hert.core.launch.service.LauncherService;
+import com.hert.core.boot.service.LauncherService;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import java.util.Properties;

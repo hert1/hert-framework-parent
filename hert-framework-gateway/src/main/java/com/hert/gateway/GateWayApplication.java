@@ -1,14 +1,14 @@
 package com.hert.gateway;
 
-import com.hert.core.launch.HertApplication;
-import com.hert.core.launch.constant.AppConstant;
+import com.hert.core.boot.HertApplication;
+import com.hert.core.tool.constant.AppConstant;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 项目启动
  *
- * @author Chill
+ * @author hert
  */
 @EnableScheduling
 @SpringCloudApplication
