@@ -15,7 +15,6 @@
         <module>hert-framework-auth</module>
         <module>hert-framework-service-api</module>
         <module>hert-framework-service</module>
-        <module>hert-framework-ops</module>
     </modules>
 
     <properties>
